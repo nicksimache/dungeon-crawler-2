@@ -1,2 +1,2 @@
 # farm
-million dollar idea #2
+million dollar idea V2
