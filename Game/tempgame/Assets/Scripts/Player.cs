@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +7,14 @@ using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
+    public static Player Instance { get; private set; }
+
+    public event EventHandler<OnSelectedCounterChangeEventArgs> OnSelectedCounterChange;
+    public class OnSelectedCounterChangeEventArgs : EventArgs
+    {
+        public ClearCounter selectedCounter;
+
+    }
 
     [SerializeField]
     private float moveSpeed = 7f;
@@ -22,8 +31,31 @@ public class Player : MonoBehaviour
     private LayerMask counterLayerMask;
 
     private Vector3 lastInteractionDir;
+    private bool isWalking = false;
+    private ClearCounter selectedCounter;
 
-    private bool isWalking = false; 
+    private void Awake()
+    {
+        if(Instance != null)
+        {
+            Debug.Log(">1 player instance");
+        }
+        Instance = this;    
+    }
+
+    private void Start()
+    {
+        gameInput.OnInteractAction += GameInput_OnInteractAction;
+    }
+
+    private void GameInput_OnInteractAction(object sender, System.EventArgs e)
+    {
+        if(selectedCounter != null)
+        {
+            selectedCounter.Interact();
+        }
+    }
+
     private void Update()
     {
         HandleMovement();
@@ -53,9 +85,19 @@ public class Player : MonoBehaviour
             if(raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
             {
                 //has ClearCounter
-                clearCounter.Interact();
+                if(clearCounter != selectedCounter)
+                {
+                    SetSelectedCounter(clearCounter);
+                }
+            }
+            else
+            {
+                SetSelectedCounter(null);
             }
 
+        } else
+        {
+            SetSelectedCounter(null);
         }
 
     
@@ -102,5 +144,15 @@ public class Player : MonoBehaviour
 
         isWalking = canMove && (moveDir != Vector3.zero);
         transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * viewRotateSpeed);
+    }
+
+    private void SetSelectedCounter(ClearCounter selectedCounter)
+    {
+        this.selectedCounter = selectedCounter;
+
+        OnSelectedCounterChange(this, new OnSelectedCounterChangeEventArgs
+        {
+            selectedCounter = selectedCounter
+        });
     }
 }
