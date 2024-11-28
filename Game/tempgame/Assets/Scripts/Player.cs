@@ -36,11 +36,11 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance != null)
+        if (Instance != null)
         {
             Debug.Log(">1 player instance");
         }
-        Instance = this;    
+        Instance = this;
     }
 
     private void Start()
@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
 
     private void GameInput_OnInteractAction(object sender, System.EventArgs e)
     {
-        if(selectedCounter != null)
+        if (selectedCounter != null)
         {
             selectedCounter.Interact();
         }
@@ -75,17 +75,17 @@ public class Player : MonoBehaviour
         float interactDistane = 2f;
 
 
-        if(moveDir != Vector3.zero)
+        if (moveDir != Vector3.zero)
         {
             lastInteractionDir = moveDir;
         }
 
-        if(Physics.Raycast(transform.position, lastInteractionDir, out RaycastHit raycastHit, interactDistane, counterLayerMask))
+        if (Physics.Raycast(transform.position, lastInteractionDir, out RaycastHit raycastHit, interactDistane, counterLayerMask))
         {
-            if(raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
+            if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
             {
                 //has ClearCounter
-                if(clearCounter != selectedCounter)
+                if (clearCounter != selectedCounter)
                 {
                     SetSelectedCounter(clearCounter);
                 }
@@ -95,12 +95,13 @@ public class Player : MonoBehaviour
                 SetSelectedCounter(null);
             }
 
-        } else
+        }
+        else
         {
             SetSelectedCounter(null);
         }
 
-    
+
     }
 
     private void HandleMovement()

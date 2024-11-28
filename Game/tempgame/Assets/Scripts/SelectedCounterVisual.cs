@@ -17,7 +17,7 @@ public class SelectedCounterVisual : MonoBehaviour
 
     private void Player_OnSelectedCounterChange(object sender, Player.OnSelectedCounterChangeEventArgs e)
     {
-        if(e.selectedCounter == clearCounter)
+        if (e.selectedCounter == clearCounter)
         {
             Show();
         }
