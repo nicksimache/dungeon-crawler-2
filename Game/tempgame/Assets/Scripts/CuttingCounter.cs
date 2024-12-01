@@ -6,7 +6,7 @@ public class CuttingCounter : BaseCounter
 {
 
     [SerializeField]
-    private KitchenObjectSO cutKitchenObjectSO;
+    private CuttingRecipeSO[] cuttingRecipeSOArray;
 
     public override void Interact(Player player)
     {
@@ -14,7 +14,10 @@ public class CuttingCounter : BaseCounter
         {
             if (player.HasKitchenObject())
             {
-                player.GetKitchenObject().SetKitchenObjectParent(this);
+                if(HasRecipeWithInput(player.GetKitchenObject().GetKitchenObjectSO()))
+                {
+                    player.GetKitchenObject().SetKitchenObjectParent(this);
+                }
             }
         }
         else
@@ -35,10 +38,37 @@ public class CuttingCounter : BaseCounter
     {
         if (HasKitchenObject())
         {
-            GetKitchenObject().DestroySelf();
+            KitchenObjectSO outputKitchenObjectSO = GetOutputForInput(GetKitchenObject().GetKitchenObjectSO());
 
-            KitchenObject.SpawnKitchenObject(cutKitchenObjectSO, this);
+            if(outputKitchenObjectSO != null)
+            {
+                GetKitchenObject().DestroySelf();
+
+                KitchenObject.SpawnKitchenObject(outputKitchenObjectSO, this);
+            }
+            
 
         }
+    }
+
+    private bool HasRecipeWithInput(KitchenObjectSO kitchenObjectSO)
+    {
+        if(GetOutputForInput(kitchenObjectSO) != null)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public KitchenObjectSO GetOutputForInput(KitchenObjectSO inputKitchenObjectSO)
+    {
+        foreach (CuttingRecipeSO cuttingRecipeSO in cuttingRecipeSOArray)
+        {
+            if (cuttingRecipeSO.input == inputKitchenObjectSO)
+            {
+                return cuttingRecipeSO.output;
+            }
+        }
+        return null;
     }
 }
