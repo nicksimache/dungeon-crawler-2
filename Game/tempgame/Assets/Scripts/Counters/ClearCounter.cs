@@ -28,10 +28,19 @@ public class ClearCounter : BaseCounter
         {
             if(player.HasKitchenObject())
             {
-                ClearCounter tempClearCounter = GameObject.FindWithTag(TEMP_COUNTER).GetComponent<ClearCounter>();
-                GetKitchenObject().SetKitchenObjectParent(tempClearCounter);
-                player.GetKitchenObject().SetKitchenObjectParent(this);
-                tempClearCounter.GetKitchenObject().SetKitchenObjectParent(player);
+                if(player.GetKitchenObject() is PlateKitchenObject)
+                {
+                    PlateKitchenObject plateKitchenObject = player.GetKitchenObject() as PlateKitchenObject;
+                    plateKitchenObject.AddIngredient(GetKitchenObject().GetKitchenObjectSO());
+                    GetKitchenObject().DestroySelf();
+                }
+                else
+                {
+                    ClearCounter tempClearCounter = GameObject.FindWithTag(TEMP_COUNTER).GetComponent<ClearCounter>();
+                    GetKitchenObject().SetKitchenObjectParent(tempClearCounter);
+                    player.GetKitchenObject().SetKitchenObjectParent(this);
+                    tempClearCounter.GetKitchenObject().SetKitchenObjectParent(player);
+                }
 
             }
             else
