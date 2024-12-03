@@ -28,18 +28,31 @@ public class ClearCounter : BaseCounter
         {
             if(player.HasKitchenObject())
             {
-                if(player.GetKitchenObject() is PlateKitchenObject)
+                if(player.GetKitchenObject().TryGetPlate(out PlateKitchenObject plateKitchenObject))
                 {
-                    PlateKitchenObject plateKitchenObject = player.GetKitchenObject() as PlateKitchenObject;
-                    plateKitchenObject.AddIngredient(GetKitchenObject().GetKitchenObjectSO());
-                    GetKitchenObject().DestroySelf();
+                    if(plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO()))
+                    {
+                        GetKitchenObject().DestroySelf();
+                    }
                 }
                 else
                 {
-                    ClearCounter tempClearCounter = GameObject.FindWithTag(TEMP_COUNTER).GetComponent<ClearCounter>();
-                    GetKitchenObject().SetKitchenObjectParent(tempClearCounter);
-                    player.GetKitchenObject().SetKitchenObjectParent(this);
-                    tempClearCounter.GetKitchenObject().SetKitchenObjectParent(player);
+                    if(GetKitchenObject().TryGetPlate(out plateKitchenObject))
+                    {
+                        if(plateKitchenObject.TryAddIngredient(player.GetKitchenObject().GetKitchenObjectSO()))
+                        {
+                            player.GetKitchenObject().DestroySelf();
+                        }
+
+                    }
+                    else
+                    {
+                        ClearCounter tempClearCounter = GameObject.FindWithTag(TEMP_COUNTER).GetComponent<ClearCounter>();
+                        GetKitchenObject().SetKitchenObjectParent(tempClearCounter);
+                        player.GetKitchenObject().SetKitchenObjectParent(this);
+                        tempClearCounter.GetKitchenObject().SetKitchenObjectParent(player);
+                    }
+                   
                 }
 
             }
