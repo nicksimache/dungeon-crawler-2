@@ -3,12 +3,30 @@
     "maps": [
         {
             "name": "Player",
-            "id": "df70fa95-8a34-4494-b137-73ab6b9c7d37",
+            "id": "17797e46-78c4-4ba2-9876-1dae76035e09",
             "actions": [
                 {
                     "name": "Interact",
                     "type": "Button",
-                    "id": "a4dd25ea-2338-48fd-b62c-c873b8c591fa",
+                    "id": "a7b6f605-a6f0-4c92-9215-43799a0901d8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CloseTerminal",
+                    "type": "Button",
+                    "id": "3d047408-870a-4cc7-9ad5-7fd4a0337cf2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TerminalInput",
+                    "type": "Button",
+                    "id": "96b04b4f-1f16-45dc-8b9b-8da55e824a4a",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -18,84 +36,39 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "377aca6a-b58e-4ae3-b1cb-84969df50b1c",
-                    "path": "<Keyboard>/e",
+                    "id": "98003db9-6415-431a-9fd4-9349b2d0154d",
+                    "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "UI",
-            "id": "272f6d14-89ba-496f-b7ff-215263d3219f",
-            "actions": [],
-            "bindings": []
-        }
-    ],
-    "controlSchemes": [
-        {
-            "name": "Keyboard&Mouse",
-            "bindingGroup": "Keyboard&Mouse",
-            "devices": [
-                {
-                    "devicePath": "<Keyboard>",
-                    "isOptional": false,
-                    "isOR": false
                 },
                 {
-                    "devicePath": "<Mouse>",
-                    "isOptional": false,
-                    "isOR": false
-                }
-            ]
-        },
-        {
-            "name": "Gamepad",
-            "bindingGroup": "Gamepad",
-            "devices": [
+                    "name": "",
+                    "id": "5813a30f-e697-48c5-b1cb-e9ce2aa3b9fd",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CloseTerminal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
                 {
-                    "devicePath": "<Gamepad>",
-                    "isOptional": false,
-                    "isOR": false
-                }
-            ]
-        },
-        {
-            "name": "Touch",
-            "bindingGroup": "Touch",
-            "devices": [
-                {
-                    "devicePath": "<Touchscreen>",
-                    "isOptional": false,
-                    "isOR": false
-                }
-            ]
-        },
-        {
-            "name": "Joystick",
-            "bindingGroup": "Joystick",
-            "devices": [
-                {
-                    "devicePath": "<Joystick>",
-                    "isOptional": false,
-                    "isOR": false
-                }
-            ]
-        },
-        {
-            "name": "XR",
-            "bindingGroup": "XR",
-            "devices": [
-                {
-                    "devicePath": "<XRController>",
-                    "isOptional": false,
-                    "isOR": false
+                    "name": "",
+                    "id": "f21cdbdf-859f-400e-b1dc-d18e7f4b68c6",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TerminalInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
-    ]
+    ],
+    "controlSchemes": []
 }

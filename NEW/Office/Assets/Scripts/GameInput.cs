@@ -5,6 +5,7 @@ public class GameInput : MonoBehaviour {
 
 	public event EventHandler OnInteractAction;
 	public event EventHandler OnStopInteract;
+	public event EventHandler OnCloseTerminal;
 
 	private InputSystem_Actions inputSystemActions;
 
@@ -25,5 +26,10 @@ public class GameInput : MonoBehaviour {
 		else {
 			OnStopInteract?.Invoke(this, EventArgs.Empty);
 		}
+		
+		if(inputSystemActions.Player.CloseTerminal.ReadValue<float>() > 0.0){
+			OnCloseTerminal?.Invoke(this, EventArgs.Empty);
+		}
+		
 	}
 }

@@ -3,29 +3,31 @@ using System;
 
 public class InteractObject : MonoBehaviour
 {
-
-	private float interactProgress = 0f;
-	private float interactProgressMax = 1.0f;
-
 	public event EventHandler<OnInteractProgressChangedEventArgs> OnInteractProgressChanged;
-	public class OnInteractProgressChangedEventArgs : EventArgs {
+	public class OnInteractProgressChangedEventArgs: EventArgs {
 		public float progressNormalized;
 	}
 
 	public event EventHandler OnResetProgressBar;
 
+	protected float interactProgress = 0f;
+	protected float interactProgressMax = 1.0f;
+	protected bool canInteract = true;
+	
 	public void Interact(Player player) {
+		if(canInteract){
+			interactProgress += Time.deltaTime;
 
-		interactProgress += Time.deltaTime;
+			interactProgress = Mathf.Clamp(interactProgress, 0f, interactProgressMax);
 
-		interactProgress = Mathf.Clamp(interactProgress, 0f, interactProgressMax);
-
-		OnInteractProgressChanged?.Invoke(this, new OnInteractProgressChangedEventArgs {
-			progressNormalized = interactProgress / interactProgressMax
-		});
+			OnInteractProgressChanged?.Invoke(this, new OnInteractProgressChangedEventArgs{
+				progressNormalized = interactProgress / interactProgressMax
+			});
+		}
+		
 	}
 
-	public void ResetProgressBar(){
+	public void ResetProgressBar() {
 		OnResetProgressBar?.Invoke(this, EventArgs.Empty);
 		interactProgress = 0f;
 	}

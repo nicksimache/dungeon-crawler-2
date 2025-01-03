@@ -6,14 +6,14 @@ public class ProgressBarUI : MonoBehaviour
 {
     [SerializeField] private InteractObject interactObject;
     [SerializeField] private Image barImage;
-	
+
     private void Start() {
 	interactObject.OnInteractProgressChanged += InteractObject_OnInteractProgressChanged;	
 	interactObject.OnResetProgressBar += InteractObject_OnResetProgressBar;
 
     }
 
-    private void InteractObject_OnInteractProgressChanged(object sender, InteractObject.OnInteractProgressChangedEventArgs e) {
+    private void InteractObject_OnInteractProgressChanged(object sender, ComputerObject.OnInteractProgressChangedEventArgs e) {
 	barImage.fillAmount = e.progressNormalized;
     }
 
