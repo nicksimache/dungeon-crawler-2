@@ -7,9 +7,13 @@ public class ProgressBarUI : MonoBehaviour
     [SerializeField] private InteractObject interactObject;
     [SerializeField] private Image barImage;
 
+
+
     private void Start() {
 	interactObject.OnInteractProgressChanged += InteractObject_OnInteractProgressChanged;	
 	interactObject.OnResetProgressBar += InteractObject_OnResetProgressBar;
+
+	
 
     }
 

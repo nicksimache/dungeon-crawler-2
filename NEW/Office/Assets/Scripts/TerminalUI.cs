@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
+using System.Collections.Generic;
 
 public class TerminalUI : MonoBehaviour
 {
@@ -8,8 +10,54 @@ public class TerminalUI : MonoBehaviour
     
     private string input;
 
-    private void Start(){
-	terminalDisplay.text = "";
+
+    private Executable<string, string> BinaryToDecimal;
+    private Folder<string, string> Executables;
+    private Folder<string, string> LevelOneRootTerminal;
+    
+
+    private void Start() {
+	BinaryToDecimal = new Executable<string, string>(
+		"BinaryToDecimal.exe",
+		(string binaryString) => {
+			int decimalValue = 0;
+       			int baseValue = 1;
+
+        
+        		for (int i = binaryString.Length - 1; i >= 0; i--){
+            			char c = binaryString[i];
+            
+           	   		if (c != '0' && c != '1'){
+               		 		return "Invalid Input";
+            			}
+
+            
+            		int bit = c - '0';
+            		decimalValue += bit * baseValue;
+            		baseValue *= 2;
+        		}
+
+			return decimalValue.ToString();
+        	
+
+		}
+    	);
+
+    	Executables = new Folder<string, string>(
+		new List<Folder<string, string>> {},
+		new List<Executable<string, string>> { BinaryToDecimal }
+
+    	);
+
+    	LevelOneRootTerminal = new Folder<string, string>(
+		new List<Folder<string, string>> { Executables },
+		new List<Executable<string, string>> {}
+
+	);
+	
+
+    	terminalDisplay.text = "Keptin Terminal\nCopyright (C) Keptin Corporation. All rights reserved.\n\nC:\\Users\\root>";
+
     }
 
     private void Update() {
@@ -29,7 +77,7 @@ public class TerminalUI : MonoBehaviour
 		}
 	}
 
-	terminalDisplay.text = input;
+	terminalDisplay.text = terminalDisplay.text + input;
     }
 
 }
