@@ -9,6 +9,8 @@ public class GameInput : MonoBehaviour {
 
 	private InputSystem_Actions inputSystemActions;
 
+
+
 	private void Awake() {
 		inputSystemActions = new InputSystem_Actions();
 		inputSystemActions.Player.Enable();
