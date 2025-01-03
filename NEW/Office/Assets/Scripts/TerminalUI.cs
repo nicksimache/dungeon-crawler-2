@@ -14,11 +14,13 @@ public class TerminalUI : MonoBehaviour
     private Executable<string, string> BinaryToDecimal;
     private Folder<string, string> Executables;
     private Folder<string, string> LevelOneRootTerminal;
+
+    private string baseText = "Keptin Terminal\nCopyright (C) Keptin Corporation. All rights reserved.\n\nC:/Users/root>";
     
 
     private void Start() {
 	BinaryToDecimal = new Executable<string, string>(
-		"BinaryToDecimal.exe",
+		"binarytodecimal.exe",
 		(string binaryString) => {
 			int decimalValue = 0;
        			int baseValue = 1;
@@ -56,12 +58,15 @@ public class TerminalUI : MonoBehaviour
 	);
 	
 
-    	terminalDisplay.text = "Keptin Terminal\nCopyright (C) Keptin Corporation. All rights reserved.\n\nC:\\Users\\root>";
-
+    	terminalDisplay.text = baseText;
     }
 
+    private bool keyPressed = false;
+
     private void Update() {
+	keyPressed = false;
 	if(Input.anyKeyDown){
+		keyPressed = true;
 		foreach(KeyCode keyCode in System.Enum.GetValues(typeof(KeyCode))){
 			if(Input.GetKeyDown(keyCode)){
 				if(keyCode == KeyCode.Backspace){
@@ -71,13 +76,23 @@ public class TerminalUI : MonoBehaviour
 				}
 				else if(keyCode >= KeyCode.A && keyCode <= KeyCode.Z){
 					input += keyCode;
-					Debug.Log(input);
+				}
+				else if(keyCode == KeyCode.Space){
+					input += " ";
+				}
+				else if(keyCode == KeyCode.Period){
+					input += ".";
+				}
+				else if(keyCode == KeyCode.Slash){
+					input += "/";
 				}
 			}
 		}
 	}
-
-	terminalDisplay.text = terminalDisplay.text + input;
+	if(keyPressed){
+		terminalDisplay.text = baseText + input.ToLower();
+		
+	}
     }
 
 }
