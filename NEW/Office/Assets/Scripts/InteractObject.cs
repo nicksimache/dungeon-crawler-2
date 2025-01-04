@@ -11,7 +11,7 @@ public class InteractObject : MonoBehaviour
 	public event EventHandler OnResetProgressBar;
 
 	protected float interactProgress = 0f;
-	protected float interactProgressMax = 1.0f;
+	protected float interactProgressMax = 0.5f;
 	protected bool canInteract = true;
 	
 	public void Interact(Player player) {

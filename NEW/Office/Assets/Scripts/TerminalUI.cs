@@ -15,7 +15,12 @@ public class TerminalUI : MonoBehaviour
     private Folder<string, string> Executables;
     private Folder<string, string> LevelOneRootTerminal;
 
-    private string baseText = "Keptin Terminal\nCopyright (C) Keptin Corporation. All rights reserved.\n\nC:/Users/root>";
+    private Folder<string, string> currentDirectory;
+
+    private List<string> filePath = new List<string> {"C:", "Users", "root"};
+    
+
+    private string baseText = "Keptin Terminal\nCopyright (C) Keptin Corporation. All rights reserved.\n\n";
     
 
     private void Start() {
@@ -47,18 +52,22 @@ public class TerminalUI : MonoBehaviour
 
     	Executables = new Folder<string, string>(
 		new List<Folder<string, string>> {},
-		new List<Executable<string, string>> { BinaryToDecimal }
+		new List<Executable<string, string>> { BinaryToDecimal },
+		"executables"
 
     	);
 
     	LevelOneRootTerminal = new Folder<string, string>(
 		new List<Folder<string, string>> { Executables },
-		new List<Executable<string, string>> {}
-
+		new List<Executable<string, string>> {},
+		"root"
 	);
+
+	Executables.SetParentFolder(LevelOneRootTerminal);
 	
 
-    	terminalDisplay.text = baseText;
+    	SetBaseText();
+	currentDirectory = LevelOneRootTerminal;
     }
 
     private bool keyPressed = false;
@@ -86,13 +95,55 @@ public class TerminalUI : MonoBehaviour
 				else if(keyCode == KeyCode.Slash){
 					input += "/";
 				}
+				else if(keyCode == KeyCode.Return){
+					EnterCommand();
+				}
 			}
 		}
 	}
 	if(keyPressed){
-		terminalDisplay.text = baseText + input.ToLower();
+		SetBaseText();
+		terminalDisplay.text += input.ToLower();
 		
 	}
     }
 
+    private void EnterCommand(){
+	input = input.ToLower();
+	Debug.Log(input);
+	if(input.Length >= 3){
+		if(input.Substring(0,3) == "cd "){
+			string folderName = input.Substring(3);
+			if(folderName == "..") {
+				if(currentDirectory.GetParentFolder() != null){
+					currentDirectory = currentDirectory.GetParentFolder();
+					baseText = "";
+					filePath.RemoveAt(filePath.Count - 1);
+				}
+			}
+			else {
+				foreach(Folder<string, string> Folder in currentDirectory.GetFolders()){
+				if(folderName == Folder.GetName()){
+					currentDirectory = Folder;
+					baseText="";			
+					filePath.Add(Folder.GetName());
+				}
+			}
+			}
+			
+			
+		}
+	}
+	input = "";
+
+    }
+	
+    public void SetBaseText(){
+	terminalDisplay.text = baseText;
+	foreach(string File in filePath){
+		terminalDisplay.text += File + "/";
+	}
+	terminalDisplay.text = terminalDisplay.text.Substring(0, terminalDisplay.text.Length-1);
+	terminalDisplay.text += ">";
+    }
 }
