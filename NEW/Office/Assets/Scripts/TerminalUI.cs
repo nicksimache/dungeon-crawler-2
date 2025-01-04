@@ -122,18 +122,45 @@ public class TerminalUI : MonoBehaviour
 				}
 			}
 			else {
+				bool foundFolder = false;
 				foreach(Folder<string, string> Folder in currentDirectory.GetFolders()){
-				if(folderName == Folder.GetName()){
-					currentDirectory = Folder;
-					baseText="";			
-					filePath.Add(Folder.GetName());
+					if(folderName == Folder.GetName()){
+						currentDirectory = Folder;
+						baseText="";			
+						filePath.Add(Folder.GetName());
+						foundFolder = true;
+					}
 				}
-			}
+				if(!foundFolder){
+					baseText = "Invalid Subdirectory\n\n";
+				}
 			}
 			
 			
 		}
+		else if(input.Substring(0,2) == "./"){
+			string executableName = input.Substring(2);
+			foreach(Executable<string, string> Exe in currentDirectory.GetExecutables()){
+				if(executableName == Exe.GetName()){
+					//run file
+				}
+			}
+		}
+		else {
+			baseText = "Invalid Command\n\n";
+		}
 	}
+	else if(input == "ls"){
+		baseText = "";
+		foreach(Folder<string, string> Folder in currentDirectory.GetFolders()){
+			baseText += Folder.GetName() + "/\n";
+		}
+		foreach(Executable<string, string> Executable in currentDirectory.GetExecutables()){
+			baseText += Executable.GetName() + "\n";
+		}
+		baseText += "\n";
+	}
+	
 	input = "";
 
     }

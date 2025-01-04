@@ -10,5 +10,9 @@ public class Executable<T, TReturn>
 	this.name = name;
 	this.Function = Function;
     }
+
+    public string GetName(){
+	return name;
+    }
     
 }
