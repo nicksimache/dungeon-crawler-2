@@ -5,14 +5,23 @@ public class Executable<T, TReturn>
 {
     private string name {get; set;}
     private Func<T, TReturn> Function {get; set;}
-
-    public Executable(string name, Func<T, TReturn> Function){
-	this.name = name;
-	this.Function = Function;
+	private string inputMessage;
+    public Executable(string name, Func<T, TReturn> Function, string inputMessage){
+		this.name = name;
+		this.Function = Function;
+		this.inputMessage = inputMessage;
     }
 
     public string GetName(){
-	return name;
+		return name;
     }
+
+	public Func<T, TReturn> GetFunction(){
+		return Function;
+	}
+
+	public string GetInputMessage(){
+		return inputMessage;
+	}
     
 }
