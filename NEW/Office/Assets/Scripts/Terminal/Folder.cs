@@ -2,32 +2,27 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-public class Folder<T, TReturn>
+public class Folder<T, TReturn> : GenericFile
 {
     private List<Folder<T, TReturn>> Folders;
     private List<Executable<T, TReturn>> Executables;
     private Folder<T, TReturn> ParentFolder;	
-    private string name;
-
-
-    public Folder(List<Folder<T, TReturn>> Folders, List<Executable<T, TReturn>> Executables){
+    
+    public Folder(List<Folder<T, TReturn>> Folders, List<Executable<T, TReturn>> Executables) : base(""){
 	this.Folders = Folders;
 	this.Executables = Executables;
-	this.name = "";
 	this.ParentFolder = null;
     }
 
-    public Folder(List<Folder<T, TReturn>> Folders, List<Executable<T, TReturn>> Executables, string name){
+    public Folder(List<Folder<T, TReturn>> Folders, List<Executable<T, TReturn>> Executables, string name) : base(name){
 	this.Folders = Folders;
 	this.Executables = Executables;
-	this.name = name;
 	this.ParentFolder = null;
     }
 
-    public Folder(List<Folder<T, TReturn>> Folders, List<Executable<T, TReturn>> Executables, string name, Folder<T, TReturn> ParentFolder){
+    public Folder(List<Folder<T, TReturn>> Folders, List<Executable<T, TReturn>> Executables, string name, Folder<T, TReturn> ParentFolder) : base(name){
 	this.Folders = Folders;
 	this.Executables = Executables;
-	this.name = name;
 	this.ParentFolder = ParentFolder;
     }
 
@@ -45,10 +40,6 @@ public class Folder<T, TReturn>
 
     public void SetExecutables (List<Executable<T, TReturn>> Executables){
 	this.Executables = Executables;
-    }
-    
-    public string GetName() {
-	return name;
     }
 
     public Folder<T, TReturn> GetParentFolder (){

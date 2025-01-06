@@ -99,6 +99,9 @@ public class TerminalUI : MonoBehaviour
 					else if(keyCode == KeyCode.Slash){
 						input += "/";
 					}
+					else if(keyCode == KeyCode.Tab){
+						HandleAutofill();
+					}
 					else if(keyCode >= KeyCode.Alpha0 && keyCode <= KeyCode.Alpha9){
 						input += (keyCode - KeyCode.Alpha0).ToString();
 					}
@@ -202,6 +205,32 @@ public class TerminalUI : MonoBehaviour
 		baseText = inputFunction(input) + "\n\n";
 		getInputForExecutable = false;
 		input = "";
+	}
+
+	private void HandleAutofill(){
+		if(input.Substring(0, 3) == "cd "){
+			AutofillTerminalInput("cd ");
+		}
+	}
+
+	private void AutofillTerminalInput(string command){
+
+		List<GenericFile> AutofillList = new List<GenericFile>();
+
+		foreach(Folder<string, string> folder in currentDirectory.GetFolders()){
+			if(input == folder.GetName().Substring(0, input.Length-1)){
+				AutofillList.Add(folder);
+			}
+		}
+		foreach(Executable<string, string> Exe in currentDirectory.GetExecutables()){
+			if(input == Exe.GetName().Substring(0, input.Length-1)){
+				AutofillList.Add(Exe);
+			}
+		}
+
+		if(AutofillList.Count == 1){
+			input = command + " " + AutofillList[0].GetName();
+		}
 	}
 
 }
