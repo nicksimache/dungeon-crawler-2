@@ -8,7 +8,7 @@ public class TerminalUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text terminalDisplay;
     
-    private string input;
+    private string input = "";
 
 
     private Executable<string, string> BinaryToDecimal;
@@ -54,9 +54,15 @@ public class TerminalUI : MonoBehaviour
 
 		);
 
+		Executable<string, string> TestF = new Executable<string, string>(
+			"belq.exe",
+			(string x) => {return "";},
+			"fart"
+		);
+
 		Executables = new Folder<string, string>(
 			new List<Folder<string, string>> {},
-			new List<Executable<string, string>> { BinaryToDecimal },
+			new List<Executable<string, string>> { BinaryToDecimal, TestF },
 			"executables"
 
 		);
@@ -77,6 +83,7 @@ public class TerminalUI : MonoBehaviour
     private bool keyPressed = false;
 
     private void Update() {
+		input = input.ToLower();
 		keyPressed = false;
 		if(Input.anyKeyDown){
 			keyPressed = true;
@@ -126,7 +133,6 @@ public class TerminalUI : MonoBehaviour
 
     private void EnterCommand(){
 		input = input.ToLower();
-		Debug.Log(input);
 		if(input.Length >= 3){
 			if(input.Substring(0,3) == "cd "){
 				string folderName = input.Substring(3);
@@ -200,7 +206,6 @@ public class TerminalUI : MonoBehaviour
 
 	private void GetRunningExecutableOutput(){
 		input = input.ToLower();
-		Debug.Log(input);
 		Func<string, string> inputFunction = runningExecutable.GetFunction();
 		baseText = inputFunction(input) + "\n\n";
 		getInputForExecutable = false;
@@ -208,29 +213,53 @@ public class TerminalUI : MonoBehaviour
 	}
 
 	private void HandleAutofill(){
-		if(input.Substring(0, 3) == "cd "){
-			AutofillTerminalInput("cd ");
+		if(input.Length == 2){
+			if(input.Substring(0, 2) == "./"){
+				AutofillTerminalInput("./");
+			}
+		}
+		else {
+			if(input.Substring(0, 3) == "cd "){
+				AutofillTerminalInput("cd ");
+			}
+			else if(input.Substring(0, 2) == "./"){
+				AutofillTerminalInput("./");
+			}
 		}
 	}
 
 	private void AutofillTerminalInput(string command){
 
 		List<GenericFile> AutofillList = new List<GenericFile>();
+		string strippedInput = input;
 
-		foreach(Folder<string, string> folder in currentDirectory.GetFolders()){
-			if(input == folder.GetName().Substring(0, input.Length-1)){
-				AutofillList.Add(folder);
+		if(command.Length < input.Length){
+			strippedInput = input.Substring(command.Length);
+
+			foreach(Folder<string, string> folder in currentDirectory.GetFolders()){
+				if(strippedInput == folder.GetName().Substring(0, strippedInput.Length)){
+					AutofillList.Add(folder);
+				}
 			}
-		}
-		foreach(Executable<string, string> Exe in currentDirectory.GetExecutables()){
-			if(input == Exe.GetName().Substring(0, input.Length-1)){
-				AutofillList.Add(Exe);
+			foreach(Executable<string, string> Exe in currentDirectory.GetExecutables()){
+				if(strippedInput == Exe.GetName().Substring(0, strippedInput.Length)){
+					AutofillList.Add(Exe);
+				}
 			}
+
+			if(AutofillList.Count == 1){
+				input = command + AutofillList[0].GetName();
+			} else {
+
+				baseText = "";
+				foreach(GenericFile File in AutofillList){
+					baseText += File.GetName() + "\n";
+				}
+				baseText += "\n";
+			}
+				
 		}
 
-		if(AutofillList.Count == 1){
-			input = command + " " + AutofillList[0].GetName();
-		}
 	}
 
 }
