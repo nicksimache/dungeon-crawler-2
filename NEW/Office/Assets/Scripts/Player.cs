@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 
 public class Player : MonoBehaviour {
+	
+	public static Player Instance { get; private set; } 
 
     [SerializeField] private GameInput gameInput;
     [SerializeField] private ComputerObject tempObj;
@@ -24,6 +26,22 @@ public class Player : MonoBehaviour {
 
 	private bool canMove = true;
 
+	[SerializeField] private LayerMask interactLayerMask;
+	private InteractObject selectedObject;
+
+	public event EventHandler<OnSelectedObjectChangedEventArgs> OnSelectedObjectChanged;
+	public class OnSelectedObjectChangedEventArgs : EventArgs {
+		public InteractObject selectedObject;
+	}
+
+
+	private void Awake(){
+		if(Instance != null){
+			Debug.LogError("Already have an instance of a player");
+		}
+		Instance = this;
+	}
+
     public void Start() {
 		gameInput.OnInteractAction += GameInput_OnInteractAction;
 		gameInput.OnStopInteract += GameInput_OnStopInteract;
@@ -38,6 +56,8 @@ public class Player : MonoBehaviour {
 
 	void Update()
     {
+		HandleInteractions();
+		
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
@@ -82,6 +102,35 @@ public class Player : MonoBehaviour {
         }
     }
 
+	private void HandleInteractions(){
+		Vector3 lookDirection = playerCamera.transform.forward;
+		float interactRange = 2f;
+
+		if(Physics.Raycast(transform.position, lookDirection, out RaycastHit raycastHit, interactRange, interactLayerMask)){
+			if(raycastHit.transform.TryGetComponent(out InteractObject interactObject)){
+				if(interactObject != selectedObject){
+					SetSelectedObject(interactObject);
+				}
+			}
+			else{
+				SetSelectedObject(null);
+			}
+		}
+		else {
+			SetSelectedObject(null);
+		}
+
+
+	}
+
+	private void SetSelectedObject(InteractObject interactObject){
+		this.selectedObject = interactObject;
+
+		OnSelectedObjectChanged?.Invoke(this, new OnSelectedObjectChangedEventArgs {
+			selectedObject = selectedObject
+		});
+	}
+
     private void GameInput_OnInteractAction (object sender, EventArgs e){
 		tempObj.Interact(this);
     }
@@ -94,7 +143,7 @@ public class Player : MonoBehaviour {
 		tempObj.CloseTerminal();
     }
 
-	private void ComputerObject_OnAccessTerminal(object sender, EventArgs e){
+	private void ComputerObject_OnAccessTerminal(object sender, ComputerObject.OnAccessTerminalEventArgs e){
 		if(e.openTerminal){
 			canMove = false;
 		}
