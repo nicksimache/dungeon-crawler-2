@@ -9,6 +9,11 @@ public class ComputerObject : InteractObject
 	private string TERMINAL_UI = "TerminalUI";
 	private string PROGRESSBARUI = "ProgressBarUI";
 
+	public event EventHandler<OnAccessTerminalEventArgs> OnAccessTerminal;
+	public class OnAccessTerminalEventArgs : EventArgs {
+		public bool openTerminal;
+	}
+
 	private void Start(){
 		terminalUI = transform.Find(TERMINAL_UI);
 		progressBarUI = transform.Find(PROGRESSBARUI);
@@ -20,10 +25,10 @@ public class ComputerObject : InteractObject
 			terminalUI.gameObject.SetActive(true);
 			canInteract = false;
 			progressBarUI.gameObject.SetActive(false);
-		}
 
-		if(!canInteract){
-			
+			OnAccessTerminal?.Invoke(this, new OnAccessTerminalEventArgs{
+				openTerminal = true
+			});
 		}
 		
 	}
@@ -33,6 +38,10 @@ public class ComputerObject : InteractObject
 			terminalUI.gameObject.SetActive(false);
 			canInteract = true;
 			progressBarUI.gameObject.SetActive(true);
+
+			OnAccessTerminal?.Invoke(this, new OnAccessTerminalEventArgs{
+				openTerminal = false
+			});
 		}
 	}
     

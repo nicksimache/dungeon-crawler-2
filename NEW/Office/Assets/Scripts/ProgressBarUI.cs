@@ -10,18 +10,18 @@ public class ProgressBarUI : MonoBehaviour
 
 
     private void Start() {
-	interactObject.OnInteractProgressChanged += InteractObject_OnInteractProgressChanged;	
-	interactObject.OnResetProgressBar += InteractObject_OnResetProgressBar;
+		interactObject.OnInteractProgressChanged += InteractObject_OnInteractProgressChanged;	
+		interactObject.OnResetProgressBar += InteractObject_OnResetProgressBar;
 
 	
 
     }
 
     private void InteractObject_OnInteractProgressChanged(object sender, ComputerObject.OnInteractProgressChangedEventArgs e) {
-	barImage.fillAmount = e.progressNormalized;
+		barImage.fillAmount = e.progressNormalized;
     }
 
     private void InteractObject_OnResetProgressBar(object sender, EventArgs e){
-	barImage.fillAmount = 0f;
+		barImage.fillAmount = 0f;
     }    
 }

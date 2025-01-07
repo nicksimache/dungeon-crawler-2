@@ -9,8 +9,7 @@ public class TerminalUI : MonoBehaviour
     [SerializeField] private TMP_Text terminalDisplay;
     
     private string input = "";
-
-
+	
     private Executable<string, string> BinaryToDecimal;
     private Folder<string, string> Executables;
     private Folder<string, string> LevelOneRootTerminal;
