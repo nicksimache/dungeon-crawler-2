@@ -7,18 +7,18 @@ public class Player : MonoBehaviour {
 	
 	public static Player Instance { get; private set; } 
 
-    [SerializeField] private GameInput gameInput;
-    [SerializeField] private ComputerObject tempObj;
+	[SerializeField] private GameInput gameInput;
+    	[SerializeField] private ComputerObject tempObj;
 
 	[SerializeField] public Camera playerCamera;
-    [SerializeField] public float walkSpeed = 6f;
-    [SerializeField] public float jumpPower = 7f;
-    [SerializeField] public float gravity = 10f;
-    [SerializeField] public float lookSpeed = 2f;
-    [SerializeField] public float lookXLimit = 45f;
-    [SerializeField] public float defaultHeight = 2f;
-    [SerializeField] public float crouchHeight = 1f;
-    [SerializeField] public float crouchSpeed = 3f;
+    	[SerializeField] public float walkSpeed = 6f;
+    	[SerializeField] public float jumpPower = 7f;
+    	[SerializeField] public float gravity = 10f;
+    	[SerializeField] public float lookSpeed = 2f;
+    	[SerializeField] public float lookXLimit = 45f;
+    	[SerializeField] public float defaultHeight = 2f;
+    	[SerializeField] public float crouchHeight = 1f;
+    	[SerializeField] public float crouchSpeed = 3f;
 	
 	private Vector3 moveDirection = Vector3.zero;
 	private float rotationX = 0;
@@ -102,12 +102,15 @@ public class Player : MonoBehaviour {
         }
     }
 
+	public GameObject lastHit;
+
 	private void HandleInteractions(){
 		Vector3 lookDirection = playerCamera.transform.forward;
 		float interactRange = 2f;
 
-		if(Physics.Raycast(transform.position, lookDirection, out RaycastHit raycastHit, interactRange, interactLayerMask)){
-			if(raycastHit.transform.TryGetComponent(out InteractObject interactObject)){
+		if(Physics.Raycast(playerCamera.transform.position, lookDirection, out RaycastHit raycastHit, interactRange, interactLayerMask)){
+			lastHit = raycastHit.transform.gameObject;
+			if(raycastHit.transform.parent.parent.TryGetComponent(out InteractObject interactObject)){
 				if(interactObject != selectedObject){
 					SetSelectedObject(interactObject);
 				}
@@ -132,6 +135,7 @@ public class Player : MonoBehaviour {
 	}
 
     private void GameInput_OnInteractAction (object sender, EventArgs e){
+
 		tempObj.Interact(this);
     }
 
@@ -143,13 +147,13 @@ public class Player : MonoBehaviour {
 		tempObj.CloseTerminal();
     }
 
-	private void ComputerObject_OnAccessTerminal(object sender, ComputerObject.OnAccessTerminalEventArgs e){
+    private void ComputerObject_OnAccessTerminal(object sender, ComputerObject.OnAccessTerminalEventArgs e){
 		if(e.openTerminal){
 			canMove = false;
 		}
 		else {
 			canMove = true;
 		}
-	}
+    }
 
 }

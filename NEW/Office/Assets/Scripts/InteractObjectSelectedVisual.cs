@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class InteractObjectSelectedVisual : MonoBehaviour
 {
-	[SerializeField] InteractObject interactObject;
-	[SerializeField] GameObject visualGameObject;
+	[SerializeField] private InteractObject interactObject;
+	[SerializeField] private GameObject visualGameObject;
 
 	private void Start(){
 		Player.Instance.OnSelectedObjectChanged += Player_OnSelectedObjectChanged;
@@ -12,7 +12,6 @@ public class InteractObjectSelectedVisual : MonoBehaviour
 	private void Player_OnSelectedObjectChanged(object sender, Player.OnSelectedObjectChangedEventArgs e) {
 		if(e.selectedObject == interactObject){
 			visualGameObject.SetActive(true);
-			Debug.Log("show");
 		}
 		else {
 			visualGameObject.SetActive(false);
