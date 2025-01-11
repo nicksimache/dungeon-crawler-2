@@ -23,6 +23,8 @@ public class Player : MonoBehaviour {
 	private Vector3 moveDirection = Vector3.zero;
 	private float rotationX = 0;
 	private CharacterController characterController;
+	
+	public List<InventoryObject> playerInventoryObjectList;
 
 	private bool canMove = true;
 
@@ -52,6 +54,8 @@ public class Player : MonoBehaviour {
 		characterController = GetComponent<CharacterController>();
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
+
+		EventManager.Instance.OnPickUpItem += EventManager_OnPickUpItem;
     }
 
 	void Update()
@@ -103,7 +107,6 @@ public class Player : MonoBehaviour {
     }
 
 	public GameObject lastHit;
-
 	private void HandleInteractions(){
 		Vector3 lookDirection = playerCamera.transform.forward;
 		float interactRange = 2f;
@@ -135,16 +138,23 @@ public class Player : MonoBehaviour {
 	}
 
     private void GameInput_OnInteractAction (object sender, EventArgs e){
-
-		tempObj.Interact(this);
+	if(selectedObject != null){
+		selectedObject.Interact(this);
+	}
     }
 
     private void GameInput_OnStopInteract (object sender, EventArgs e){
-		tempObj.ResetProgressBar();
+	if(selectedObject != null){
+		selectedObject.ResetProgressBar();
+	}
     }
 
     private void GameInput_OnCloseTerminal(object sender, EventArgs e){
-		tempObj.CloseTerminal();
+	if(selectedObject != null){
+		if(selectedObject.TryGetComponent(out ComputerObject computerObject)){
+			computerObject.CloseTerminal();
+		}
+	}
     }
 
     private void ComputerObject_OnAccessTerminal(object sender, ComputerObject.OnAccessTerminalEventArgs e){
@@ -154,6 +164,10 @@ public class Player : MonoBehaviour {
 		else {
 			canMove = true;
 		}
+    }
+
+    private void EventManager_OnPickUpItem(object sender, EventManager.OnPickUpItemEventArgs e){
+	playerInventoryObjectList.Add(e.inventoryObject);
     }
 
 }

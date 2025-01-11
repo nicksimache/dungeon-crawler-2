@@ -8,7 +8,7 @@ public class ProgressBarUI : MonoBehaviour
     [SerializeField] private InteractObject interactObject;
     [SerializeField] private Image barImage;
 
-    [SerializeField] private List<GameObject> visualGameObjectList;
+    [SerializeField] private List<GameObject> visualGameObjectList = new List<GameObject>();
 
     private void Start() {
 		interactObject.OnInteractProgressChanged += InteractObject_OnInteractProgressChanged;	
