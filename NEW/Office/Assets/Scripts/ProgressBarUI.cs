@@ -10,6 +10,8 @@ public class ProgressBarUI : MonoBehaviour
 
     [SerializeField] private List<GameObject> visualGameObjectList = new List<GameObject>();
 
+    private bool progressBarVisible = false;
+
     private void Start() {
 		interactObject.OnInteractProgressChanged += InteractObject_OnInteractProgressChanged;	
 		interactObject.OnResetProgressBar += InteractObject_OnResetProgressBar;
@@ -18,10 +20,13 @@ public class ProgressBarUI : MonoBehaviour
 
     }
 
+
     private void Player_OnSelectedObjectChanged(object sender, Player.OnSelectedObjectChangedEventArgs e){
 	if(e.selectedObject == interactObject){
+		
+
 		foreach(GameObject gameObject in visualGameObjectList){
-			gameObject.SetActive(true);
+			gameObject.SetActive(true);	
 		}
 	}
 	else {

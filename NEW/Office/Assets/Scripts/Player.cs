@@ -34,6 +34,7 @@ public class Player : MonoBehaviour {
 	public event EventHandler<OnSelectedObjectChangedEventArgs> OnSelectedObjectChanged;
 	public class OnSelectedObjectChangedEventArgs : EventArgs {
 		public InteractObject selectedObject;
+		public float distance;
 	}
 
 
@@ -113,27 +114,30 @@ public class Player : MonoBehaviour {
 
 		if(Physics.Raycast(playerCamera.transform.position, lookDirection, out RaycastHit raycastHit, interactRange, interactLayerMask)){
 			lastHit = raycastHit.transform.gameObject;
+			float raycastHitDistance = raycastHit.distance;
 			if(raycastHit.transform.parent.parent.TryGetComponent(out InteractObject interactObject)){
+				lastHit = interactObject.gameObject;
 				if(interactObject != selectedObject){
-					SetSelectedObject(interactObject);
+					SetSelectedObject(interactObject, raycastHitDistance);
 				}
 			}
 			else{
-				SetSelectedObject(null);
+				SetSelectedObject(null, 0);
 			}
 		}
 		else {
-			SetSelectedObject(null);
+			SetSelectedObject(null, 0);
 		}
 
 
 	}
 
-	private void SetSelectedObject(InteractObject interactObject){
+	private void SetSelectedObject(InteractObject interactObject, float distance){
 		this.selectedObject = interactObject;
 
 		OnSelectedObjectChanged?.Invoke(this, new OnSelectedObjectChangedEventArgs {
-			selectedObject = selectedObject
+			selectedObject = selectedObject,
+			distance = distance
 		});
 	}
 
@@ -167,7 +171,19 @@ public class Player : MonoBehaviour {
     }
 
     private void EventManager_OnPickUpItem(object sender, EventManager.OnPickUpItemEventArgs e){
-	playerInventoryObjectList.Add(e.inventoryObject);
+		playerInventoryObjectList.Add(e.inventoryObject);
     }
+
+    public Vector3 GetPlayerLookDirNormalized(){
+		return playerCamera.transform.forward.normalized;
+    }
+
+    public Vector3 GetPlayerCameraPos(){
+		return playerCamera.transform.position;
+    }
+
+	public List<InventoryObject> GetPlayerInventoryObjectList(){
+		return playerInventoryObjectList;
+	}
 
 }

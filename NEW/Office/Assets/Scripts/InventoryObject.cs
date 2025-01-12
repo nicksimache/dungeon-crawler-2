@@ -6,8 +6,15 @@ public class InventoryObject : InteractObject
 	
 	private void Update(){
 		if(interactProgress == interactProgressMax){
-			gameObject.SetActive(false);
-			EventManager.Instance.PickUpItem(this);			
+
+			if(EventManager.Instance == null){
+				Debug.LogError("No instance of event manager");
+				return;
+			}
+			if(Player.Instance.GetPlayerInventoryObjectList().Length < 5){
+				EventManager.Instance.PickUpItem(this);
+				gameObject.SetActive(false);
+			}
 		}
 	}
 }
