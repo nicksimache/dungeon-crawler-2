@@ -8,17 +8,16 @@ public class Player : MonoBehaviour {
 	public static Player Instance { get; private set; } 
 
 	[SerializeField] private GameInput gameInput;
-    	[SerializeField] private ComputerObject tempObj;
 
 	[SerializeField] public Camera playerCamera;
-    	[SerializeField] public float walkSpeed = 6f;
-    	[SerializeField] public float jumpPower = 7f;
-    	[SerializeField] public float gravity = 10f;
-    	[SerializeField] public float lookSpeed = 2f;
-    	[SerializeField] public float lookXLimit = 45f;
-    	[SerializeField] public float defaultHeight = 2f;
-    	[SerializeField] public float crouchHeight = 1f;
-    	[SerializeField] public float crouchSpeed = 3f;
+    [SerializeField] public float walkSpeed = 6f;
+    [SerializeField] public float jumpPower = 7f;
+    [SerializeField] public float gravity = 10f;
+    [SerializeField] public float lookSpeed = 2f;
+    [SerializeField] public float lookXLimit = 45f;
+    [SerializeField] public float defaultHeight = 2f;
+   	[SerializeField] public float crouchHeight = 1f;
+   	[SerializeField] public float crouchSpeed = 3f;
 	
 	private Vector3 moveDirection = Vector3.zero;
 	private float rotationX = 0;
@@ -50,7 +49,7 @@ public class Player : MonoBehaviour {
 		gameInput.OnStopInteract += GameInput_OnStopInteract;
 		gameInput.OnCloseTerminal += GameInput_OnCloseTerminal;
 
-		tempObj.OnAccessTerminal += ComputerObject_OnAccessTerminal;
+		EventManager.Instance.OnAccessTerminal += EventManager_OnAccessTerminal;
 
 		characterController = GetComponent<CharacterController>();
 		Cursor.lockState = CursorLockMode.Locked;
@@ -59,8 +58,7 @@ public class Player : MonoBehaviour {
 		EventManager.Instance.OnPickUpItem += EventManager_OnPickUpItem;
     }
 
-	void Update()
-    {
+	void Update() {
 		HandleInteractions();
 		
         Vector3 forward = transform.TransformDirection(Vector3.forward);
@@ -161,7 +159,7 @@ public class Player : MonoBehaviour {
 	}
     }
 
-    private void ComputerObject_OnAccessTerminal(object sender, ComputerObject.OnAccessTerminalEventArgs e){
+    private void EventManager_OnAccessTerminal(object sender, EventManager.OnAccessTerminalEventArgs e){
 		if(e.openTerminal){
 			canMove = false;
 		}

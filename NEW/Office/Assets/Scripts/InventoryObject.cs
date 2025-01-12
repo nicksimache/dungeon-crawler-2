@@ -11,7 +11,7 @@ public class InventoryObject : InteractObject
 				Debug.LogError("No instance of event manager");
 				return;
 			}
-			if(Player.Instance.GetPlayerInventoryObjectList().Length < 5){
+			if(Player.Instance.GetPlayerInventoryObjectList().Count < 5){
 				EventManager.Instance.PickUpItem(this);
 				gameObject.SetActive(false);
 			}

@@ -75,7 +75,7 @@ public class TerminalUI : MonoBehaviour
 		Executables.SetParentFolder(LevelOneRootTerminal);
 		
 
-			SetBaseText();
+		SetBaseText();
 		currentDirectory = LevelOneRootTerminal;
     }
 

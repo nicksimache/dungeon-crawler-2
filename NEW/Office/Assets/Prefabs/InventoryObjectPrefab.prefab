@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 4064385732304119945}
   - component: {fileID: 73299066182389708}
   - component: {fileID: 5044650652316481571}
+  - component: {fileID: 5633938957204432723}
   m_Layer: 6
   m_Name: ProgressBarUI
   m_TagString: Untagged
@@ -214,6 +215,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 1
+--- !u!95 &5633938957204432723
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500120809814425006}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fd9bef6cfa2a48745a16c32c3b91a027, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1020735252331353483
 GameObject:
   m_ObjectHideFlags: 0
