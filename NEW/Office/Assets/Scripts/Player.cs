@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 
@@ -8,6 +9,10 @@ public class Player : MonoBehaviour {
 	public static Player Instance { get; private set; } 
 
 	[SerializeField] private GameInput gameInput;
+
+	[SerializeField] private Image toolbar;
+	public List<InventoryObject> playerInventoryObjectList = new List<InventoryObject>();
+	private List<Image> hotbarImages = new List<Image>(); // list of hotbar slots (images)
 
 	[SerializeField] public Camera playerCamera;
     [SerializeField] public float walkSpeed = 6f;
@@ -23,7 +28,6 @@ public class Player : MonoBehaviour {
 	private float rotationX = 0;
 	private CharacterController characterController;
 	
-	public List<InventoryObject> playerInventoryObjectList;
 
 	private bool canMove = true;
 
@@ -42,6 +46,10 @@ public class Player : MonoBehaviour {
 			Debug.LogError("Already have an instance of a player");
 		}
 		Instance = this;
+
+		foreach(Transform child in toolbar.transform){
+			hotbarImages.Add(child.GetComponent<Image>());
+		}
 	}
 
     public void Start() {
@@ -59,6 +67,7 @@ public class Player : MonoBehaviour {
     }
 
 	void Update() {
+		FillHotbar();
 		HandleInteractions();
 		
         Vector3 forward = transform.TransformDirection(Vector3.forward);
@@ -104,6 +113,16 @@ public class Player : MonoBehaviour {
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
     }
+
+	private void FillHotbar(){
+		for(int i = 0 ; i < Mathf.Min(hotbarImages.Count, playerInventoryObjectList.Count); i++){
+			if(playerInventoryObjectList != null){
+				hotbarImages[i].transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+				hotbarImages[i].transform.GetChild(0).GetComponent<Image>().sprite = playerInventoryObjectList[i].GetInventoryObjectSprite();
+
+			}
+		}
+	}
 
 	public GameObject lastHit;
 	private void HandleInteractions(){
@@ -180,8 +199,8 @@ public class Player : MonoBehaviour {
 		return playerCamera.transform.position;
     }
 
-	public List<InventoryObject> GetPlayerInventoryObjectList(){
-		return playerInventoryObjectList;
+	public int GetNumInventoryObjects(){
+		return playerInventoryObjectList.Count;
 	}
 
 }

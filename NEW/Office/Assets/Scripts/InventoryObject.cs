@@ -3,7 +3,8 @@ using System;
 
 public class InventoryObject : InteractObject
 {
-	
+	[SerializeField] private Sprite inventoryObjectSprite;
+
 	private void Update(){
 		if(interactProgress == interactProgressMax){
 
@@ -11,10 +12,14 @@ public class InventoryObject : InteractObject
 				Debug.LogError("No instance of event manager");
 				return;
 			}
-			if(Player.Instance.GetPlayerInventoryObjectList().Count < 5){
+			if(Player.Instance.GetNumInventoryObjects() < 5){
 				EventManager.Instance.PickUpItem(this);
 				gameObject.SetActive(false);
 			}
 		}
+	}
+
+	public Sprite GetInventoryObjectSprite(){
+		return inventoryObjectSprite;
 	}
 }
