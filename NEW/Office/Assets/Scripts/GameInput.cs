@@ -7,6 +7,11 @@ public class GameInput : MonoBehaviour {
 	public event EventHandler OnStopInteract;
 	public event EventHandler OnCloseTerminal;
 
+	public event EventHandler<OnSwitchHotbarSelectedItemEventArgs> OnSwitchHotbarSelectedItem;
+	public class OnSwitchHotbarSelectedItemEventArgs : EventArgs {
+		public int inventorySlot;
+	}
+
 	private InputSystem_Actions inputSystemActions;
 
 
@@ -14,6 +19,12 @@ public class GameInput : MonoBehaviour {
 	private void Awake() {
 		inputSystemActions = new InputSystem_Actions();
 		inputSystemActions.Player.Enable();
+
+		inputSystemActions.Player.InventorySlot1.performed += _ => SwitchHotbarSlot(0);
+        inputSystemActions.Player.InventorySlot2.performed += _ => SwitchHotbarSlot(1);
+        inputSystemActions.Player.InventorySlot3.performed += _ => SwitchHotbarSlot(2);
+        inputSystemActions.Player.InventorySlot4.performed += _ => SwitchHotbarSlot(3);
+        inputSystemActions.Player.InventorySlot5.performed += _ => SwitchHotbarSlot(4);
 	}
 
 	public bool IsPlayerInteracting() {
@@ -33,5 +44,25 @@ public class GameInput : MonoBehaviour {
 			OnCloseTerminal?.Invoke(this, EventArgs.Empty);
 		}
 		
+		
 	}
+
+	private void SwitchHotbarSlot(int slot)
+    {
+        OnSwitchHotbarSelectedItem?.Invoke(this, new OnSwitchHotbarSelectedItemEventArgs
+        {
+            inventorySlot = slot
+        });
+    }
+
+	private void OnDestroy(){
+        inputSystemActions.Player.InventorySlot1.performed -= _ => SwitchHotbarSlot(0);
+        inputSystemActions.Player.InventorySlot2.performed -= _ => SwitchHotbarSlot(1);
+        inputSystemActions.Player.InventorySlot3.performed -= _ => SwitchHotbarSlot(2);
+        inputSystemActions.Player.InventorySlot4.performed -= _ => SwitchHotbarSlot(3);
+        inputSystemActions.Player.InventorySlot5.performed -= _ => SwitchHotbarSlot(4);
+
+	}
+
+
 }

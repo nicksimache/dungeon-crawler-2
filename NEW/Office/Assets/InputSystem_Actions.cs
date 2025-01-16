@@ -46,9 +46,45 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""TerminalInput"",
+                    ""name"": ""InventorySlot1"",
                     ""type"": ""Button"",
-                    ""id"": ""96b04b4f-1f16-45dc-8b9b-8da55e824a4a"",
+                    ""id"": ""2c14568b-ab3f-4cce-b8f1-735257ec1db6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InventorySlot2"",
+                    ""type"": ""Button"",
+                    ""id"": ""1f829302-6dd5-48c7-9b2e-3743c61183d2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InventorySlot3"",
+                    ""type"": ""Button"",
+                    ""id"": ""6b46f531-e4f7-4597-b123-6f1275955681"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InventorySlot4"",
+                    ""type"": ""Button"",
+                    ""id"": ""60174ce4-bfc7-4ac9-a30b-ad35ee7f8c1f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InventorySlot5"",
+                    ""type"": ""Button"",
+                    ""id"": ""c20c18ba-9939-4f7a-bcef-f992804fa909"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -80,309 +116,56 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f21cdbdf-859f-400e-b1dc-d18e7f4b68c6"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""id"": ""988ed116-399a-4875-b2e5-33ae49821afa"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""TerminalInput"",
+                    ""action"": ""InventorySlot1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""43d1d5d3-7cb9-4a48-9fbf-2ddd035548af"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""id"": ""daa9a002-d357-42ba-9d64-b1d3e90a24f4"",
+                    ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""TerminalInput"",
+                    ""action"": ""InventorySlot2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d28025f2-345f-4a97-bba3-60e70f280cd6"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""id"": ""9926eb9e-80fd-48eb-acbb-0c9c752ae8c2"",
+                    ""path"": ""<Keyboard>/3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""TerminalInput"",
+                    ""action"": ""InventorySlot3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""846591ff-ffa3-409d-9c6e-53c510feb70e"",
-                    ""path"": ""<Keyboard>/r"",
+                    ""id"": ""1b6d44a1-5bf3-4390-aafb-07dcd60fce6a"",
+                    ""path"": ""<Keyboard>/4"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""TerminalInput"",
+                    ""action"": ""InventorySlot4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""692e53a7-3a5d-47b9-ae40-84fa0efaeb8b"",
-                    ""path"": ""<Keyboard>/t"",
+                    ""id"": ""b93d3430-4548-4cf9-bb2c-2dbbf659f885"",
+                    ""path"": ""<Keyboard>/5"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c37bcdb5-d781-46cb-901b-e534d2c6d10c"",
-                    ""path"": ""<Keyboard>/y"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c21c3329-9da1-45ba-8a60-523ef87126b7"",
-                    ""path"": ""<Keyboard>/u"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""de0a8b6a-b07d-417b-9196-c93f9a04ee5f"",
-                    ""path"": ""<Keyboard>/i"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""290de925-cc20-4c2d-bcab-56f82845486d"",
-                    ""path"": ""<Keyboard>/o"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""15927c64-94c3-4fb1-a22a-2892527c3f7c"",
-                    ""path"": ""<Keyboard>/p"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b691cf62-4ae0-4295-96e9-7bf905cf763c"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c0dacb4e-ed3d-4103-9b21-a99f0ebc09de"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""17374b85-b62e-4ad9-aa08-9a64de10f3d6"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""39d363e0-d54e-4756-b0f4-df2337b06e93"",
-                    ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""87570146-660f-438a-b225-9a5cb7deba8f"",
-                    ""path"": ""<Keyboard>/g"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""19e51701-5091-4452-925b-4ae3c9ab9381"",
-                    ""path"": ""<Keyboard>/h"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""95d3bffa-ef5b-4839-9e53-06b1f9767023"",
-                    ""path"": ""<Keyboard>/j"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""442135fe-5f19-43a7-8d0d-495521e668b1"",
-                    ""path"": ""<Keyboard>/k"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e5906f3a-4021-46c5-b6ef-ceaee83626d6"",
-                    ""path"": ""<Keyboard>/l"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f2e39a61-7cdd-4336-8a4f-0aa24b5f5472"",
-                    ""path"": ""<Keyboard>/z"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""13dcd151-aa4f-4ab0-b433-2535156475b7"",
-                    ""path"": ""<Keyboard>/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a099c741-348f-43c1-a6f6-77e9bab2a315"",
-                    ""path"": ""<Keyboard>/c"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6b5a8819-f03b-40d2-bf08-9e6788af9d01"",
-                    ""path"": ""<Keyboard>/v"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""dba206da-47e9-41ca-b323-cf5bd00b5cb1"",
-                    ""path"": ""<Keyboard>/b"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""05fcd952-c66e-4d5e-b5ec-c166a850b9cc"",
-                    ""path"": ""<Keyboard>/n"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8aec7bf3-3b33-4d4d-8c83-4e3ff660712e"",
-                    ""path"": ""<Keyboard>/m"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0b17b254-7fd1-4d30-bace-9b95c6856de8"",
-                    ""path"": ""<Keyboard>/period"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""79b8d266-6485-495a-93cc-d53f5222ebec"",
-                    ""path"": ""<Keyboard>/slash"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TerminalInput"",
+                    ""action"": ""InventorySlot5"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -395,7 +178,11 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_CloseTerminal = m_Player.FindAction("CloseTerminal", throwIfNotFound: true);
-        m_Player_TerminalInput = m_Player.FindAction("TerminalInput", throwIfNotFound: true);
+        m_Player_InventorySlot1 = m_Player.FindAction("InventorySlot1", throwIfNotFound: true);
+        m_Player_InventorySlot2 = m_Player.FindAction("InventorySlot2", throwIfNotFound: true);
+        m_Player_InventorySlot3 = m_Player.FindAction("InventorySlot3", throwIfNotFound: true);
+        m_Player_InventorySlot4 = m_Player.FindAction("InventorySlot4", throwIfNotFound: true);
+        m_Player_InventorySlot5 = m_Player.FindAction("InventorySlot5", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -464,14 +251,22 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_CloseTerminal;
-    private readonly InputAction m_Player_TerminalInput;
+    private readonly InputAction m_Player_InventorySlot1;
+    private readonly InputAction m_Player_InventorySlot2;
+    private readonly InputAction m_Player_InventorySlot3;
+    private readonly InputAction m_Player_InventorySlot4;
+    private readonly InputAction m_Player_InventorySlot5;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
         public PlayerActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @CloseTerminal => m_Wrapper.m_Player_CloseTerminal;
-        public InputAction @TerminalInput => m_Wrapper.m_Player_TerminalInput;
+        public InputAction @InventorySlot1 => m_Wrapper.m_Player_InventorySlot1;
+        public InputAction @InventorySlot2 => m_Wrapper.m_Player_InventorySlot2;
+        public InputAction @InventorySlot3 => m_Wrapper.m_Player_InventorySlot3;
+        public InputAction @InventorySlot4 => m_Wrapper.m_Player_InventorySlot4;
+        public InputAction @InventorySlot5 => m_Wrapper.m_Player_InventorySlot5;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -487,9 +282,21 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @CloseTerminal.started += instance.OnCloseTerminal;
             @CloseTerminal.performed += instance.OnCloseTerminal;
             @CloseTerminal.canceled += instance.OnCloseTerminal;
-            @TerminalInput.started += instance.OnTerminalInput;
-            @TerminalInput.performed += instance.OnTerminalInput;
-            @TerminalInput.canceled += instance.OnTerminalInput;
+            @InventorySlot1.started += instance.OnInventorySlot1;
+            @InventorySlot1.performed += instance.OnInventorySlot1;
+            @InventorySlot1.canceled += instance.OnInventorySlot1;
+            @InventorySlot2.started += instance.OnInventorySlot2;
+            @InventorySlot2.performed += instance.OnInventorySlot2;
+            @InventorySlot2.canceled += instance.OnInventorySlot2;
+            @InventorySlot3.started += instance.OnInventorySlot3;
+            @InventorySlot3.performed += instance.OnInventorySlot3;
+            @InventorySlot3.canceled += instance.OnInventorySlot3;
+            @InventorySlot4.started += instance.OnInventorySlot4;
+            @InventorySlot4.performed += instance.OnInventorySlot4;
+            @InventorySlot4.canceled += instance.OnInventorySlot4;
+            @InventorySlot5.started += instance.OnInventorySlot5;
+            @InventorySlot5.performed += instance.OnInventorySlot5;
+            @InventorySlot5.canceled += instance.OnInventorySlot5;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -500,9 +307,21 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @CloseTerminal.started -= instance.OnCloseTerminal;
             @CloseTerminal.performed -= instance.OnCloseTerminal;
             @CloseTerminal.canceled -= instance.OnCloseTerminal;
-            @TerminalInput.started -= instance.OnTerminalInput;
-            @TerminalInput.performed -= instance.OnTerminalInput;
-            @TerminalInput.canceled -= instance.OnTerminalInput;
+            @InventorySlot1.started -= instance.OnInventorySlot1;
+            @InventorySlot1.performed -= instance.OnInventorySlot1;
+            @InventorySlot1.canceled -= instance.OnInventorySlot1;
+            @InventorySlot2.started -= instance.OnInventorySlot2;
+            @InventorySlot2.performed -= instance.OnInventorySlot2;
+            @InventorySlot2.canceled -= instance.OnInventorySlot2;
+            @InventorySlot3.started -= instance.OnInventorySlot3;
+            @InventorySlot3.performed -= instance.OnInventorySlot3;
+            @InventorySlot3.canceled -= instance.OnInventorySlot3;
+            @InventorySlot4.started -= instance.OnInventorySlot4;
+            @InventorySlot4.performed -= instance.OnInventorySlot4;
+            @InventorySlot4.canceled -= instance.OnInventorySlot4;
+            @InventorySlot5.started -= instance.OnInventorySlot5;
+            @InventorySlot5.performed -= instance.OnInventorySlot5;
+            @InventorySlot5.canceled -= instance.OnInventorySlot5;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -524,6 +343,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     {
         void OnInteract(InputAction.CallbackContext context);
         void OnCloseTerminal(InputAction.CallbackContext context);
-        void OnTerminalInput(InputAction.CallbackContext context);
+        void OnInventorySlot1(InputAction.CallbackContext context);
+        void OnInventorySlot2(InputAction.CallbackContext context);
+        void OnInventorySlot3(InputAction.CallbackContext context);
+        void OnInventorySlot4(InputAction.CallbackContext context);
+        void OnInventorySlot5(InputAction.CallbackContext context);
     }
 }

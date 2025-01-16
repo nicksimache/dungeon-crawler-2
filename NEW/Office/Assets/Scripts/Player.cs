@@ -13,6 +13,7 @@ public class Player : MonoBehaviour {
 	[SerializeField] private Image toolbar;
 	public List<InventoryObject> playerInventoryObjectList = new List<InventoryObject>();
 	private List<Image> hotbarImages = new List<Image>(); // list of hotbar slots (images)
+	private int selectedHotbarSlot = -1;
 
 	[SerializeField] public Camera playerCamera;
     [SerializeField] public float walkSpeed = 6f;
@@ -56,6 +57,7 @@ public class Player : MonoBehaviour {
 		gameInput.OnInteractAction += GameInput_OnInteractAction;
 		gameInput.OnStopInteract += GameInput_OnStopInteract;
 		gameInput.OnCloseTerminal += GameInput_OnCloseTerminal;
+		gameInput.OnSwitchHotbarSelectedItem += GameInput_OnSwitchHotbarSelectedItem;
 
 		EventManager.Instance.OnAccessTerminal += EventManager_OnAccessTerminal;
 
@@ -116,6 +118,13 @@ public class Player : MonoBehaviour {
 
 	private void FillHotbar(){
 		for(int i = 0 ; i < Mathf.Min(hotbarImages.Count, playerInventoryObjectList.Count); i++){
+			if(selectedHotbarSlot != -1 && i == selectedHotbarSlot){
+				hotbarImages[i].transform.localScale = new Vector3(1.05f, 1.05f, 1.05f);
+			}
+			else {
+				hotbarImages[i].transform.localScale = new Vector3(1f, 1f, 1f);
+			}
+
 			if(playerInventoryObjectList != null){
 				hotbarImages[i].transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
 				hotbarImages[i].transform.GetChild(0).GetComponent<Image>().sprite = playerInventoryObjectList[i].GetInventoryObjectSprite();
@@ -158,24 +167,33 @@ public class Player : MonoBehaviour {
 		});
 	}
 
-    private void GameInput_OnInteractAction (object sender, EventArgs e){
-	if(selectedObject != null){
-		selectedObject.Interact(this);
+	private void GameInput_OnSwitchHotbarSelectedItem (object sender, GameInput.OnSwitchHotbarSelectedItemEventArgs e){
+		if(selectedHotbarSlot != e.inventorySlot){
+			selectedHotbarSlot = e.inventorySlot;
+		}
+		else {
+			selectedHotbarSlot = -1;
+		}
 	}
+
+    private void GameInput_OnInteractAction (object sender, EventArgs e){
+		if(selectedObject != null){
+			selectedObject.Interact(this);
+		}
     }
 
     private void GameInput_OnStopInteract (object sender, EventArgs e){
-	if(selectedObject != null){
-		selectedObject.ResetProgressBar();
-	}
+		if(selectedObject != null){
+			selectedObject.ResetProgressBar();
+		}
     }
 
     private void GameInput_OnCloseTerminal(object sender, EventArgs e){
-	if(selectedObject != null){
-		if(selectedObject.TryGetComponent(out ComputerObject computerObject)){
-			computerObject.CloseTerminal();
+		if(selectedObject != null){
+			if(selectedObject.TryGetComponent(out ComputerObject computerObject)){
+				computerObject.CloseTerminal();
+			}
 		}
-	}
     }
 
     private void EventManager_OnAccessTerminal(object sender, EventManager.OnAccessTerminalEventArgs e){
