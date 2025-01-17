@@ -42,6 +42,8 @@ public class ProgressBarUI : MonoBehaviour
 			}
 
 			animator.Play(POP_UP);
+			interactObject.MakeCanInteract(true);
+
 		}
 		else
 		{
@@ -51,6 +53,7 @@ public class ProgressBarUI : MonoBehaviour
 			}
 
 			animator.Play(PROGRESS_BAR_IDLE);
+			interactObject.MakeCanInteract(false);
 		}
 
 		lastSelectedObject = e.selectedObject;

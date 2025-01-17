@@ -31,4 +31,8 @@ public class InteractObject : MonoBehaviour
 		OnResetProgressBar?.Invoke(this, EventArgs.Empty);
 		interactProgress = 0f;
 	}
+
+	public void MakeCanInteract(bool interact){
+		canInteract = interact;
+	}
 }
