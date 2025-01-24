@@ -45,11 +45,11 @@ public class Generator2D : MonoBehaviour
     }
 
     [SerializeField] private List<GameObject> roomPrefabList;
+    [SerializeField] private GameObject hallwayPrefab;
 
     [SerializeField] private Vector2Int size;
     [SerializeField] private int numMandatoryRooms;
     [SerializeField] private int numOptionalRooms;
-    [SerializeField] private Vector2Int roomMaxSize;
     [SerializeField] private GameObject cubePrefab;
     [SerializeField] private Material redMaterial;
     [SerializeField] private Material blueMaterial;
@@ -72,7 +72,7 @@ public class Generator2D : MonoBehaviour
     private void Generate()
     {
         random = new Random();
-        grid = new Grid2D<CellType>(size + new Vector2Int(20,20), Vector2Int.zero);
+        grid = new Grid2D<CellType>(size + new Vector2Int(20, 20), Vector2Int.zero);
         rooms = new List<Room>();
 
         PlaceRooms(numMandatoryRooms, true);
@@ -88,14 +88,14 @@ public class Generator2D : MonoBehaviour
 
     void PlaceRooms(int roomCount, bool createMainRooms)
     {
-        while(roomCount > 0)
+        while (roomCount > 0)
         {
             Vector2Int location = new Vector2Int(
                 random.Next(0, size.x),
                 random.Next(0, size.y)
             );
 
-            int randRoomNum = random.Next(0, roomPrefabList.Count-1);
+            int randRoomNum = random.Next(0, roomPrefabList.Count - 1);
             GameObject currRoom = roomPrefabList[randRoomNum];
 
             Vector2Int roomSize = currRoom.GetComponent<RoomPrefab>().GetRoomPrefabSize();
@@ -133,7 +133,7 @@ public class Generator2D : MonoBehaviour
                 rooms.Add(newRoom);
 
                 PlaceRoom(newRoom.bounds.position, newRoom.bounds.size, currRoom);
-                
+
                 foreach (var pos in newRoom.bounds.allPositionsWithin)
                 {
                     grid[pos] = CellType.Room;
@@ -193,7 +193,8 @@ public class Generator2D : MonoBehaviour
             var startPos = new Vector2Int((int)startPosf.x, (int)startPosf.y);
             var endPos = new Vector2Int((int)endPosf.x, (int)endPosf.y);
 
-            var path = aStar.FindPath(startPos, endPos, (DungeonPathfinder.Node a, DungeonPathfinder.Node b) => {
+            var path = aStar.FindPath(startPos, endPos, (DungeonPathfinder.Node a, DungeonPathfinder.Node b) =>
+            {
                 var pathCost = new DungeonPathfinder.PathCost();
 
                 pathCost.cost = Vector2Int.Distance(b.Position, endPos);    //heuristic
@@ -219,19 +220,19 @@ public class Generator2D : MonoBehaviour
             if (path != null)
             {
 
-                if(createMainHallways)
+                if (createMainHallways)
                 {
 
                     bool madeDoorRoom = false;
                     bool madeDoorRoomEnd = false;
 
-                    for(int i = 0; i < path.Count; i++)
+                    for (int i = 0; i < path.Count; i++)
                     {
                         var current = path[i];
 
                         if (grid[current] == CellType.None)
                         {
-                            if(!madeDoorRoom && (grid[current] == CellType.Door || grid[current] == CellType.LockedDoor))
+                            if (!madeDoorRoom && (grid[current] == CellType.Door || grid[current] == CellType.LockedDoor))
                             {
                                 madeDoorRoom = true;
                             }
@@ -252,7 +253,7 @@ public class Generator2D : MonoBehaviour
                             }
                         }
 
-                        
+
                     }
                 }
                 else
@@ -317,14 +318,20 @@ public class Generator2D : MonoBehaviour
 
     void PlaceRoom(Vector2Int location, Vector2Int roomSize, GameObject roomPrefab)
     {
-        float roomLocationX = location.x + (float)(roomSize.x)/2 - 0.5f;
-        float roomLocationY = location.y + (float)(roomSize.y)/2 - 0.5f;
+        float roomLocationX = location.x + (float)(roomSize.x) / 2 - 0.5f;
+        float roomLocationY = location.y + (float)(roomSize.y) / 2 - 0.5f;
         GameObject go = Instantiate(roomPrefab, new Vector3(roomLocationX, 0, roomLocationY), Quaternion.identity);
+    }
+
+    void PlaceHallway(Vector2Int location, Material color)
+    {
+        hallwayPrefab.GetComponent<MeshRenderer>().material = color;
+        GameObject go = Instantiate(hallwayPrefab, new Vector3(location.x, 0, location.y), Quaternion.identity);
     }
 
     void PlaceHallway(Vector2Int location)
     {
-        
+
         PlaceCube(location, new Vector2Int(1, 1), blueMaterial);
 
     }
@@ -341,7 +348,7 @@ public class Generator2D : MonoBehaviour
 
     void PlaceMainHallway(Vector2Int location)
     {
-        PlaceCube(location, new Vector2Int(1,1), purpleMaterial);
+        PlaceCube(location, new Vector2Int(1, 1), purpleMaterial);
     }
 
     void PlaceCube(Vector2Int location, Vector2Int size, Material material)
