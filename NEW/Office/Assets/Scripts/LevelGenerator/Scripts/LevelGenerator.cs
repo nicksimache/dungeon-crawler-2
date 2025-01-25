@@ -72,10 +72,11 @@ public class Generator2D : MonoBehaviour
     private void Generate()
     {
         random = new Random();
-        grid = new Grid2D<CellType>(size + new Vector2Int(20, 20), Vector2Int.zero);
+        Vector2Int levelSize = size + new Vector2Int(20, 20);
+        grid = new Grid2D<CellType>(levelSize, Vector2Int.zero);
         rooms = new List<Room>();
 
-        //PlaceStartingRoom();
+        PlaceStartingRoom();
 
         PlaceRooms(numMandatoryRooms, true);
         Triangulate();
@@ -86,6 +87,24 @@ public class Generator2D : MonoBehaviour
         Triangulate();
         CreateHallways(false);
         PathfindHallways(false);
+    }
+
+    void PlaceStartingRoom(){
+        Vector2Int location = new Vector2Int(size.x/2, size.y/2);
+        GameObject currRoom = startingRoomPrefab;
+        Vector2Int roomSize = currRoom.GetComponent<RoomPrefab>().GetRoomPrefabSize();
+
+        Room newRoom = new Room(location, roomSize);
+
+        rooms.Add(newRoom);
+
+        PlaceRoom(newRoom.bounds.position, newRoom.bounds.size, currRoom);
+
+        foreach (var pos in newRoom.bounds.allPositionsWithin)
+        {
+            grid[pos] = CellType.Room;
+        }
+        
     }
 
     void PlaceRooms(int roomCount, bool createMainRooms)
