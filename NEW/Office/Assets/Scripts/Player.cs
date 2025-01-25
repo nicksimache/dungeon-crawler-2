@@ -15,15 +15,15 @@ public class Player : MonoBehaviour {
 	private List<Image> hotbarImages = new List<Image>(); // list of hotbar slots (images)
 	private int selectedHotbarSlot = -1;
 
-	[SerializeField] public Camera playerCamera;
-    [SerializeField] public float walkSpeed = 6f;
-    [SerializeField] public float jumpPower = 7f;
-    [SerializeField] public float gravity = 10f;
-    [SerializeField] public float lookSpeed = 2f;
-    [SerializeField] public float lookXLimit = 45f;
-    [SerializeField] public float defaultHeight = 2f;
-   	[SerializeField] public float crouchHeight = 1f;
-   	[SerializeField] public float crouchSpeed = 3f;
+	[SerializeField] private Camera playerCamera;
+    [SerializeField] private float walkSpeed = 6f;
+    [SerializeField] private float jumpPower = 7f;
+    [SerializeField] private float gravity = 10f;
+    [SerializeField] private float lookSpeed = 2f;
+    [SerializeField] private float lookXLimit = 45f;
+    [SerializeField] private float defaultHeight = 2f;
+   	[SerializeField] private float crouchHeight = 1f;
+   	[SerializeField] private float crouchSpeed = 3f;
 	
 	private Vector3 moveDirection = Vector3.zero;
 	private float rotationX = 0;

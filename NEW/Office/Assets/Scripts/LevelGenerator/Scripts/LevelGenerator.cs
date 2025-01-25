@@ -46,11 +46,11 @@ public class Generator2D : MonoBehaviour
 
     [SerializeField] private List<GameObject> roomPrefabList;
     [SerializeField] private GameObject hallwayPrefab;
+    [SerializeField] private GameObject startingRoomPrefab;
 
     [SerializeField] private Vector2Int size;
     [SerializeField] private int numMandatoryRooms;
     [SerializeField] private int numOptionalRooms;
-    [SerializeField] private GameObject cubePrefab;
     [SerializeField] private Material redMaterial;
     [SerializeField] private Material blueMaterial;
     [SerializeField] private Material purpleMaterial;
@@ -74,6 +74,8 @@ public class Generator2D : MonoBehaviour
         random = new Random();
         grid = new Grid2D<CellType>(size + new Vector2Int(20, 20), Vector2Int.zero);
         rooms = new List<Room>();
+
+        //PlaceStartingRoom();
 
         PlaceRooms(numMandatoryRooms, true);
         Triangulate();
@@ -296,19 +298,19 @@ public class Generator2D : MonoBehaviour
                 {
                     if (grid[pos] == CellType.Hallway)
                     {
-                        PlaceHallway(pos);
+                        PlaceHallway(pos, blueMaterial);
                     }
                     else if (grid[pos] == CellType.MainHallway)
                     {
-                        PlaceMainHallway(pos);
+                        PlaceHallway(pos, purpleMaterial);
                     }
                     else if (grid[pos] == CellType.LockedDoor)
                     {
-                        PlaceLockedRoom(pos);
+                        PlaceHallway(pos, orangeMaterial);
                     }
                     else if (grid[pos] == CellType.Door)
                     {
-                        PlaceDoorRoom(pos);
+                        PlaceHallway(pos, greenMaterial);
                     }
 
                 }
@@ -325,37 +327,8 @@ public class Generator2D : MonoBehaviour
 
     void PlaceHallway(Vector2Int location, Material color)
     {
-        hallwayPrefab.GetComponent<MeshRenderer>().material = color;
+        hallwayPrefab.transform.GetChild(0).GetComponent<MeshRenderer>().material = color;
         GameObject go = Instantiate(hallwayPrefab, new Vector3(location.x, 0, location.y), Quaternion.identity);
-    }
-
-    void PlaceHallway(Vector2Int location)
-    {
-
-        PlaceCube(location, new Vector2Int(1, 1), blueMaterial);
-
-    }
-
-    void PlaceLockedRoom(Vector2Int location)
-    {
-        PlaceCube(location, new Vector2Int(1, 1), orangeMaterial);
-    }
-
-    void PlaceDoorRoom(Vector2Int location)
-    {
-        PlaceCube(location, new Vector2Int(1, 1), greenMaterial);
-    }
-
-    void PlaceMainHallway(Vector2Int location)
-    {
-        PlaceCube(location, new Vector2Int(1, 1), purpleMaterial);
-    }
-
-    void PlaceCube(Vector2Int location, Vector2Int size, Material material)
-    {
-        GameObject go = Instantiate(cubePrefab, new Vector3(location.x, 0, location.y), Quaternion.identity);
-        go.GetComponent<Transform>().localScale = new Vector3(size.x, 1, size.y);
-        go.GetComponent<MeshRenderer>().material = material;
     }
 
     List<Vector2Int> GetRoomPositions(Vector2Int location, Vector2Int size)
