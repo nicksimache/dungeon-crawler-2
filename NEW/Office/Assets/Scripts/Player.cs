@@ -57,6 +57,7 @@ public class Player : MonoBehaviour {
 		gameInput.OnInteractAction += GameInput_OnInteractAction;
 		gameInput.OnStopInteract += GameInput_OnStopInteract;
 		gameInput.OnCloseTerminal += GameInput_OnCloseTerminal;
+		gameInput.OnCloseChest += GameInput_OnCloseChest;
 		gameInput.OnSwitchHotbarSelectedItem += GameInput_OnSwitchHotbarSelectedItem;
 
 		EventManager.Instance.OnAccessTerminal += EventManager_OnAccessTerminal;
@@ -195,6 +196,14 @@ public class Player : MonoBehaviour {
 			}
 		}
     }
+
+	private void GameInput_OnCloseChest(object sender, EventArgs e){
+		if(selectedObject != null){
+			if(selectedObject.TryGetComponent(out ChestObject chestObject)){
+				chestObject.CloseChest();
+			}
+		}
+	}
 
     private void EventManager_OnAccessTerminal(object sender, EventManager.OnAccessTerminalEventArgs e){
 		if(e.openTerminal){

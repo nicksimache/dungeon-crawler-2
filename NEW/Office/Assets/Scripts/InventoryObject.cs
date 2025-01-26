@@ -3,7 +3,7 @@ using System;
 
 public class InventoryObject : InteractObject
 {
-	[SerializeField] private Sprite inventoryObjectSprite;
+	[SerializeField] private _BaseItem item;
 
 	private void Update(){
 		if(interactProgress == interactProgressMax){
@@ -23,6 +23,6 @@ public class InventoryObject : InteractObject
 	}
 
 	public Sprite GetInventoryObjectSprite(){
-		return inventoryObjectSprite;
+		return item.GetItemSprite();
 	}
 }

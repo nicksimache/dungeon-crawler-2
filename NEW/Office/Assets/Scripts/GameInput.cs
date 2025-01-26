@@ -6,6 +6,7 @@ public class GameInput : MonoBehaviour {
 	public event EventHandler OnInteractAction;
 	public event EventHandler OnStopInteract;
 	public event EventHandler OnCloseTerminal;
+	public event EventHandler OnCloseChest;
 
 	public event EventHandler<OnSwitchHotbarSelectedItemEventArgs> OnSwitchHotbarSelectedItem;
 	public class OnSwitchHotbarSelectedItemEventArgs : EventArgs {
@@ -42,9 +43,9 @@ public class GameInput : MonoBehaviour {
 		
 		if(inputSystemActions.Player.CloseTerminal.ReadValue<float>() > 0.0){
 			OnCloseTerminal?.Invoke(this, EventArgs.Empty);
+			OnCloseChest?.Invoke(this, EventArgs.Empty);
 		}
-		
-		
+				
 	}
 
 	private void SwitchHotbarSlot(int slot)
