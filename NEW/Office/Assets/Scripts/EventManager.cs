@@ -19,6 +19,11 @@ public class EventManager : MonoBehaviour
 		public InventoryObject inventoryObject;
     }
 
+	public event EventHandler<OnInteractInventoryEventArgs> OnInteractInventory;
+	public class OnInteractInventoryEventArgs : EventArgs {
+		public bool openInventory;
+	}
+
 	public event EventHandler<OnAccessTerminalEventArgs> OnAccessTerminal;
 	public class OnAccessTerminalEventArgs : EventArgs {
 		public bool openTerminal;
@@ -45,5 +50,11 @@ public class EventManager : MonoBehaviour
 		OnOpenChest?.Invoke(this, new OnOpenChestEventArgs{
 			openChest = openChest
 		});
+	}
+
+	public void OpenInvetory(bool openInventory){
+		OnInteractInventory?.Invoke(this, new OnInteractInventoryEventArgs{
+			openInventory = openInvetory;
+		})
 	}
 }

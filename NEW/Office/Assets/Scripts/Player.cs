@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
 	public List<InventoryObject> playerInventoryObjectList = new List<InventoryObject>();
 	private List<Image> hotbarImages = new List<Image>(); // list of hotbar slots (images)
 	private int selectedHotbarSlot = -1;
+	private bool isInventoryOpen = false;
 
 	[SerializeField] private Camera playerCamera;
     [SerializeField] private float walkSpeed = 6f;
@@ -58,6 +59,7 @@ public class Player : MonoBehaviour {
 		gameInput.OnStopInteract += GameInput_OnStopInteract;
 		gameInput.OnCloseTerminal += GameInput_OnCloseTerminal;
 		gameInput.OnCloseChest += GameInput_OnCloseChest;
+		gameInput.OnOpenInventory += GameInput_OnOpenInventory;
 		gameInput.OnSwitchHotbarSelectedItem += GameInput_OnSwitchHotbarSelectedItem;
 
 		EventManager.Instance.OnAccessTerminal += EventManager_OnAccessTerminal;
@@ -202,6 +204,15 @@ public class Player : MonoBehaviour {
 			if(selectedObject.TryGetComponent(out ChestObject chestObject)){
 				chestObject.CloseChest();
 			}
+		}
+	}
+
+	private void GameInput_OnOpenInventory(object sender, EventArgs e){
+		if(isInventoryOpen){
+			isInventoryOpen = false;
+		}
+		else {
+			isInventoryOpen = true;
 		}
 	}
 
