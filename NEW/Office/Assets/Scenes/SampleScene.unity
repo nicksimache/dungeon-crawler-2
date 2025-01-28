@@ -3468,7 +3468,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f4b533622925414ebe7691e0cad69d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chestUIElementsList: []
+  visualGameObjectList:
+  - {fileID: 1152859398}
+  - {fileID: 1982878182}
 --- !u!224 &2067234823 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2605492835486360272, guid: 1e0d01c9a0613cc4d8b04c88dbce97e5, type: 3}

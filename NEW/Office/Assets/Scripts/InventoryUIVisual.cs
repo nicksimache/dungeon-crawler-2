@@ -3,24 +3,25 @@ using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 
-public class ChestUIVisual : MonoBehaviour
+public class InventoryUIVisual : MonoBehaviour
 {
-    [SerializeField] private List<Image> chestUIElementsList;
+
+    [SerializeField] private List<GameObject> visualGameObjectList;
 
     void Start()
     {
-        EventManager.Instance.OnOpenChest += EventManager_OnOpenChest; 
+        EventManager.Instance.OnInteractInventory += EventManager_OnInteractInventory; 
     }
 
-    public void EventManager_OnOpenChest(object sender, EventManager.OnOpenChestEventArgs e){
-        if(e.openChest){
-            foreach (Image image in chestUIElementsList){
-                image.gameObject.SetActive(true);
+    public void EventManager_OnInteractInventory(object sender, EventManager.OnInteractInventoryEventArgs e){
+        if(e.openInventory){
+            foreach (GameObject go in visualGameObjectList){
+                go.SetActive(true);
             }
         }
         else {
-            foreach(Image image in chestUIElementsList){
-                image.gameObject.SetActive(false);
+            foreach(GameObject go in visualGameObjectList){
+                go.SetActive(false);
             }
         }
     }

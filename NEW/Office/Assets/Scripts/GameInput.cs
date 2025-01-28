@@ -29,6 +29,7 @@ public class GameInput : MonoBehaviour {
         inputSystemActions.Player.InventorySlot3.performed += _ => SwitchHotbarSlot(2);
         inputSystemActions.Player.InventorySlot4.performed += _ => SwitchHotbarSlot(3);
         inputSystemActions.Player.InventorySlot5.performed += _ => SwitchHotbarSlot(4);
+		inputSystemActions.Player.OpenInventory.performed += _ => OpenInventory();
 	}
 
 	public bool IsPlayerInteracting() {
@@ -48,10 +49,6 @@ public class GameInput : MonoBehaviour {
 			OnCloseTerminal?.Invoke(this, EventArgs.Empty);
 			OnCloseChest?.Invoke(this, EventArgs.Empty);
 		}
-
-		if(inputSystemActions.Player.OpenInventory.ReadValue<float>() > 0.0){
-			OnOpenInventory?.Invoke(this, EventArgs.Empty);
-		}
 				
 	}
 
@@ -63,12 +60,18 @@ public class GameInput : MonoBehaviour {
         });
     }
 
+	private void OpenInventory(){
+		OnOpenInventory?.Invoke(this, EventArgs.Empty);
+		Debug.Log("eisis");
+	}
+
 	private void OnDestroy(){
         inputSystemActions.Player.InventorySlot1.performed -= _ => SwitchHotbarSlot(0);
         inputSystemActions.Player.InventorySlot2.performed -= _ => SwitchHotbarSlot(1);
         inputSystemActions.Player.InventorySlot3.performed -= _ => SwitchHotbarSlot(2);
         inputSystemActions.Player.InventorySlot4.performed -= _ => SwitchHotbarSlot(3);
         inputSystemActions.Player.InventorySlot5.performed -= _ => SwitchHotbarSlot(4);
+		inputSystemActions.Player.OpenInventory.performed -= _ => OpenInventory();
 
 	}
 

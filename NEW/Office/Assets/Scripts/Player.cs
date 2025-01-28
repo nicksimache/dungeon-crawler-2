@@ -210,9 +210,11 @@ public class Player : MonoBehaviour {
 	private void GameInput_OnOpenInventory(object sender, EventArgs e){
 		if(isInventoryOpen){
 			isInventoryOpen = false;
+			EventManager.Instance.OpenInventory(false);
 		}
 		else {
 			isInventoryOpen = true;
+			EventManager.Instance.OpenInventory(true);
 		}
 	}
 

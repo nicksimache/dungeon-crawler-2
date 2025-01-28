@@ -52,9 +52,9 @@ public class EventManager : MonoBehaviour
 		});
 	}
 
-	public void OpenInvetory(bool openInventory){
+	public void OpenInventory(bool openInventory){
 		OnInteractInventory?.Invoke(this, new OnInteractInventoryEventArgs{
-			openInventory = openInvetory;
-		})
+			openInventory = openInventory
+		});
 	}
 }
