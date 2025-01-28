@@ -62,7 +62,6 @@ public class GameInput : MonoBehaviour {
 
 	private void OpenInventory(){
 		OnOpenInventory?.Invoke(this, EventArgs.Empty);
-		Debug.Log("eisis");
 	}
 
 	private void OnDestroy(){

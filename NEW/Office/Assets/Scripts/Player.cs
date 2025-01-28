@@ -11,8 +11,11 @@ public class Player : MonoBehaviour {
 	[SerializeField] private GameInput gameInput;
 
 	[SerializeField] private Image toolbar;
-	public List<InventoryObject> playerInventoryObjectList = new List<InventoryObject>();
+	private List<InventoryObject> playerInventoryObjectList = new List<InventoryObject>(); // THIS IS FOR THE HOTBAR
 	private List<Image> hotbarImages = new List<Image>(); // list of hotbar slots (images)
+
+	private List<InventoryObject> playerMainInventoryObjectList = new List<InventoryObject>(); // THIS IS FOR THE INVENTORY
+
 	private int selectedHotbarSlot = -1;
 	private bool isInventoryOpen = false;
 
@@ -32,6 +35,7 @@ public class Player : MonoBehaviour {
 	
 
 	private bool canMove = true;
+	private bool canMoveCamera = true;
 
 	[SerializeField] private LayerMask interactLayerMask;
 	private InteractObject selectedObject;
@@ -110,7 +114,7 @@ public class Player : MonoBehaviour {
 
         characterController.Move(moveDirection * Time.deltaTime);
 
-        if (canMove)
+        if (canMove && canMoveCamera)
         {
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
@@ -211,10 +215,20 @@ public class Player : MonoBehaviour {
 		if(isInventoryOpen){
 			isInventoryOpen = false;
 			EventManager.Instance.OpenInventory(false);
+
+			Cursor.visible = false;
+			Cursor.lockState = CursorLockMode.Locked;
+
+			canMoveCamera = true;
 		}
 		else {
 			isInventoryOpen = true;
 			EventManager.Instance.OpenInventory(true);
+
+			Cursor.visible = true;
+			Cursor.lockState = CursorLockMode.None;
+
+			canMoveCamera = false;
 		}
 	}
 
