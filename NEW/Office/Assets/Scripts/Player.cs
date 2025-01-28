@@ -11,8 +11,9 @@ public class Player : MonoBehaviour {
 	[SerializeField] private GameInput gameInput;
 
 	[SerializeField] private Image toolbar;
-	private List<InventoryObject> playerInventoryObjectList = new List<InventoryObject>(); // THIS IS FOR THE HOTBAR
+	private InventoryObject[] playerInventoryObjectList = new InventoryObject[5]; // THIS IS FOR THE HOTBAR
 	private List<Image> hotbarImages = new List<Image>(); // list of hotbar slots (images)
+	private int numItemsInHotbar = 0;
 
 	private List<InventoryObject> playerMainInventoryObjectList = new List<InventoryObject>(); // THIS IS FOR THE INVENTORY
 
@@ -124,7 +125,7 @@ public class Player : MonoBehaviour {
     }
 
 	private void FillHotbar(){
-		for(int i = 0 ; i < Mathf.Min(hotbarImages.Count, playerInventoryObjectList.Count); i++){
+		for(int i = 0 ; i < Mathf.Min(hotbarImages.Count, 5); i++){
 			if(selectedHotbarSlot != -1 && i == selectedHotbarSlot){
 				hotbarImages[i].transform.localScale = new Vector3(1.05f, 1.05f, 1.05f);
 			}
@@ -132,7 +133,7 @@ public class Player : MonoBehaviour {
 				hotbarImages[i].transform.localScale = new Vector3(1f, 1f, 1f);
 			}
 
-			if(playerInventoryObjectList != null){
+			if(playerInventoryObjectList != null && playerInventoryObjectList[i] != null){
 				hotbarImages[i].transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
 				hotbarImages[i].transform.GetChild(0).GetComponent<Image>().sprite = playerInventoryObjectList[i].GetInventoryObjectSprite();
 
@@ -242,7 +243,20 @@ public class Player : MonoBehaviour {
     }
 
     private void EventManager_OnPickUpItem(object sender, EventManager.OnPickUpItemEventArgs e){
-		playerInventoryObjectList.Add(e.inventoryObject);
+		for(int i = 0; i < 5; i++){
+			if(playerInventoryObjectList[i] == null){
+				//this should be handled in the update loop, so it loops through all the children of hotbar and inventory and
+				//sets the position to an inventory object IF the slot has a UI prefab as a child
+				playerInventoryObjectList[i] = e.inventoryObject;
+				numItemsInHotbar++;
+
+				//fire an event that makes it so that it instantiates a thing at the current hotbar position
+				//should call a method in EventManager that fires an event that takes in "i" as the hotbar position and the inventory object
+				//then that should instantiate a prefab in the UI script for the hotbar that instantiates the item prefab and sets the sprite to the object sprite
+				EventManager.Instance.AddItemToHotbar(i, e.inventoryObject);
+				break;
+			}
+		}
     }
 
     public Vector3 GetPlayerLookDirNormalized(){
@@ -254,7 +268,7 @@ public class Player : MonoBehaviour {
     }
 
 	public int GetNumInventoryObjects(){
-		return playerInventoryObjectList.Count;
+		return numItemsInHotbar;
 	}
 
 }

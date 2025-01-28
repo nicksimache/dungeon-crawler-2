@@ -6,8 +6,17 @@ using System.Collections.Generic;
 
 public class InventoryObjectUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    private Image image;
+    private Transform parentAfterDrag;
+
+    private void Awake(){
+        image = transform.GetComponent<Image>();
+    }
+
     public void OnBeginDrag(PointerEventData eventData){
-        throw new System.NotImplementedException();
+        image.raycastTarget = false;
+        parentAfterDrag = transform.parent;
+        transform.SetParent(transform.root);
     }
 
     public void OnDrag(PointerEventData eventData){
@@ -15,6 +24,7 @@ public class InventoryObjectUI : MonoBehaviour, IBeginDragHandler, IDragHandler,
     }
 
     public void OnEndDrag(PointerEventData eventData){
-        throw new System.NotImplementedException();
+        image.raycastTarget = true;
+        transform.SetParent(parentAfterDrag);
     }
 }

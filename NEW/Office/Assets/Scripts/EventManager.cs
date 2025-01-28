@@ -24,6 +24,12 @@ public class EventManager : MonoBehaviour
 		public bool openInventory;
 	}
 
+	public event EventHandler<OnAddItemToHotbarEventArgs> OnAddItemToHotbar;
+	public class OnAddItemToHotbarEventArgs : EventArgs {
+		public int i;
+		public InventoryObject inventoryObject;
+	}
+
 	public event EventHandler<OnAccessTerminalEventArgs> OnAccessTerminal;
 	public class OnAccessTerminalEventArgs : EventArgs {
 		public bool openTerminal;
@@ -55,6 +61,13 @@ public class EventManager : MonoBehaviour
 	public void OpenInventory(bool openInventory){
 		OnInteractInventory?.Invoke(this, new OnInteractInventoryEventArgs{
 			openInventory = openInventory
+		});
+	}
+
+	public void AddItemToHotbar(int i, InventoryObject inventoryObject){
+		OnAddItemToHotbar?.Invoke(this, new OnAddItemToHotbarEventArgs {
+			i = i,
+			inventoryObject = inventoryObject
 		});
 	}
 }
