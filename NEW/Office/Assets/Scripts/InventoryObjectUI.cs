@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class InventoryObjectUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     private Image image;
-    private Transform parentAfterDrag;
+    public Transform parentAfterDrag;
 
     private void Awake(){
         image = transform.GetComponent<Image>();
