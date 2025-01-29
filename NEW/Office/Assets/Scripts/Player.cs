@@ -11,11 +11,15 @@ public class Player : MonoBehaviour {
 	[SerializeField] private GameInput gameInput;
 
 	[SerializeField] private Image toolbar;
-	private InventoryObject[] playerInventoryObjectList = new InventoryObject[5]; // THIS IS FOR THE HOTBAR
-	private List<Image> hotbarImages = new List<Image>(); // list of hotbar slots (images)
-	private int numItemsInHotbar = 0;
+	[SerializeField] private Image inventoryToolbar;
+	[Header("TESTING")]
+	public InventoryObject[] playerInventoryObjectList = new InventoryObject[5]; // THIS IS FOR THE HOTBAR
+	public List<Transform> hotbarImages = new List<Transform>(); // list of hotbar slots (images)
 
-	private List<InventoryObject> playerMainInventoryObjectList = new List<InventoryObject>(); // THIS IS FOR THE INVENTORY
+	public InventoryObject[] playerMainInventoryObjectList = new InventoryObject[15];
+	public List<Transform> inventoryImages = new List<Transform>();
+	public int numItemsInHotbar = 0;
+
 
 	private int selectedHotbarSlot = -1;
 	private bool isInventoryOpen = false;
@@ -55,7 +59,10 @@ public class Player : MonoBehaviour {
 		Instance = this;
 
 		foreach(Transform child in toolbar.transform){
-			hotbarImages.Add(child.GetComponent<Image>());
+			hotbarImages.Add(child);
+		}
+		foreach(Transform child in inventoryToolbar.transform){
+			inventoryImages.Add(child);
 		}
 	}
 
@@ -77,7 +84,8 @@ public class Player : MonoBehaviour {
     }
 
 	void Update() {
-		FillHotbar();
+		//FillHotbar();
+		HandleInventory();
 		HandleInteractions();
 		
         Vector3 forward = transform.TransformDirection(Vector3.forward);
@@ -124,6 +132,7 @@ public class Player : MonoBehaviour {
         }
     }
 
+	//not using anymore
 	private void FillHotbar(){
 		for(int i = 0 ; i < Mathf.Min(hotbarImages.Count, 5); i++){
 			if(selectedHotbarSlot != -1 && i == selectedHotbarSlot){
@@ -137,6 +146,29 @@ public class Player : MonoBehaviour {
 				hotbarImages[i].transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
 				hotbarImages[i].transform.GetChild(0).GetComponent<Image>().sprite = playerInventoryObjectList[i].GetInventoryObjectSprite();
 
+			}
+		}
+	}
+
+	private void HandleInventory(){
+		numItemsInHotbar = 0;
+		for(int i = 0; i < 5; i++){
+			if(hotbarImages[i].childCount > 0){
+				Debug.Log("the " + i + "'th slot is occupied");
+				playerInventoryObjectList[i] = hotbarImages[i].GetChild(0).GetComponent<InventoryObjectUI>().GetInventoryObject();
+				numItemsInHotbar++;
+			}
+			else {
+				playerInventoryObjectList[i] = null;
+			}
+		}
+
+		for(int i = 0; i < 15; i++){
+			if(inventoryImages[i].childCount > 0){
+				playerMainInventoryObjectList[i] = inventoryImages[i].GetChild(0).GetComponent<InventoryObjectUI>().GetInventoryObject();
+			}
+			else {
+				playerMainInventoryObjectList[i] = null;
 			}
 		}
 	}
@@ -245,10 +277,11 @@ public class Player : MonoBehaviour {
     private void EventManager_OnPickUpItem(object sender, EventManager.OnPickUpItemEventArgs e){
 		for(int i = 0; i < 5; i++){
 			if(playerInventoryObjectList[i] == null){
+				Debug.Log(i);
 				//this should be handled in the update loop, so it loops through all the children of hotbar and inventory and
 				//sets the position to an inventory object IF the slot has a UI prefab as a child
-				playerInventoryObjectList[i] = e.inventoryObject;
-				numItemsInHotbar++;
+				// playerInventoryObjectList[i] = e.inventoryObject;
+				// numItemsInHotbar++;
 
 				//fire an event that makes it so that it instantiates a thing at the current hotbar position
 				//should call a method in EventManager that fires an event that takes in "i" as the hotbar position and the inventory object

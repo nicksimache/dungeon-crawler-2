@@ -8,6 +8,8 @@ public class InventoryObjectUI : MonoBehaviour, IBeginDragHandler, IDragHandler,
 {
     private Image image;
     public Transform parentAfterDrag;
+    //remember change back to private
+    public InventoryObject inventoryObject;
 
     private void Awake(){
         image = transform.GetComponent<Image>();
@@ -26,5 +28,13 @@ public class InventoryObjectUI : MonoBehaviour, IBeginDragHandler, IDragHandler,
     public void OnEndDrag(PointerEventData eventData){
         image.raycastTarget = true;
         transform.SetParent(parentAfterDrag);
+    }
+
+    public void SetInventoryObject(InventoryObject obj){
+        inventoryObject = obj;
+    }
+
+    public InventoryObject GetInventoryObject(){
+        return inventoryObject;
     }
 }

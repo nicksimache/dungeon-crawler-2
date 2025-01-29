@@ -34,7 +34,6 @@ public class GameInput : MonoBehaviour {
 
 	public bool IsPlayerInteracting() {
 		return (inputSystemActions.Player.Interact.ReadValue<float>() > 0.0);
-	
 	}
 
 	private void Update() {

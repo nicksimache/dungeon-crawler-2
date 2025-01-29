@@ -14,6 +14,7 @@ public class ToolbarUI : MonoBehaviour
 
     private void EventManager_OnAddItemToHotbar(object sender, EventManager.OnAddItemToHotbarEventArgs e){
         hotbarItemPrefab.GetComponent<Image>().sprite = e.inventoryObject.GetInventoryObjectSprite();
+        hotbarItemPrefab.GetComponent<InventoryObjectUI>().SetInventoryObject(e.inventoryObject);
         GameObject go = Instantiate(hotbarItemPrefab, transform.GetChild(e.i));
     }
 
