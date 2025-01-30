@@ -6,7 +6,10 @@ public class GameInput : MonoBehaviour {
 	public event EventHandler OnInteractAction;
 	public event EventHandler OnStopInteract;
 	public event EventHandler OnCloseTerminal;
-	public event EventHandler OnOpenInventory;
+	public event EventHandler<OnOpenInventoryEventArgs> OnOpenInventory;
+	public class OnOpenInventoryEventArgs : EventArgs {
+		public bool playerClosedInventory;
+	}
 
 	public event EventHandler OnCloseChest;
 
@@ -30,6 +33,7 @@ public class GameInput : MonoBehaviour {
         inputSystemActions.Player.InventorySlot4.performed += _ => SwitchHotbarSlot(3);
         inputSystemActions.Player.InventorySlot5.performed += _ => SwitchHotbarSlot(4);
 		inputSystemActions.Player.OpenInventory.performed += _ => OpenInventory();
+		inputSystemActions.Player.CloseTerminal.performed += _ => HandleEscPress();
 	}
 
 	public bool IsPlayerInteracting() {
@@ -43,13 +47,14 @@ public class GameInput : MonoBehaviour {
 		else {
 			OnStopInteract?.Invoke(this, EventArgs.Empty);
 		}
-		
-		if(inputSystemActions.Player.CloseTerminal.ReadValue<float>() > 0.0){
-			OnCloseTerminal?.Invoke(this, EventArgs.Empty);
-			OnCloseChest?.Invoke(this, EventArgs.Empty);
-		}
 				
 	}
+
+	private void HandleEscPress(){
+		OnCloseTerminal?.Invoke(this, EventArgs.Empty);
+		OnOpenInventory?.Invoke(this, new OnOpenInventoryEventArgs{
+			playerClosedInventory = true
+		});	}
 
 	private void SwitchHotbarSlot(int slot)
     {
@@ -60,7 +65,9 @@ public class GameInput : MonoBehaviour {
     }
 
 	private void OpenInventory(){
-		OnOpenInventory?.Invoke(this, EventArgs.Empty);
+		OnOpenInventory?.Invoke(this, new OnOpenInventoryEventArgs{
+			playerClosedInventory = false
+		});
 	}
 
 	private void OnDestroy(){
@@ -70,6 +77,7 @@ public class GameInput : MonoBehaviour {
         inputSystemActions.Player.InventorySlot4.performed -= _ => SwitchHotbarSlot(3);
         inputSystemActions.Player.InventorySlot5.performed -= _ => SwitchHotbarSlot(4);
 		inputSystemActions.Player.OpenInventory.performed -= _ => OpenInventory();
+		inputSystemActions.Player.CloseTerminal.performed -= _ => HandleEscPress();
 
 	}
 

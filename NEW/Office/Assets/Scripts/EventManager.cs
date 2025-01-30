@@ -17,6 +17,7 @@ public class EventManager : MonoBehaviour
     public event EventHandler<OnPickUpItemEventArgs> OnPickUpItem;
     public class OnPickUpItemEventArgs : EventArgs {
 		public InventoryObject inventoryObject;
+		public bool itemGoesIntoHotbar;
     }
 
 	public event EventHandler<OnInteractInventoryEventArgs> OnInteractInventory;
@@ -26,6 +27,12 @@ public class EventManager : MonoBehaviour
 
 	public event EventHandler<OnAddItemToHotbarEventArgs> OnAddItemToHotbar;
 	public class OnAddItemToHotbarEventArgs : EventArgs {
+		public int i;
+		public InventoryObject inventoryObject;
+	}
+
+	public event EventHandler<OnAddItemToInventoryEventArgs> OnAddItemToInventory;
+	public class OnAddItemToInventoryEventArgs : EventArgs {
 		public int i;
 		public InventoryObject inventoryObject;
 	}
@@ -40,9 +47,17 @@ public class EventManager : MonoBehaviour
 		public bool openChest;
 	}
 
-    public void PickUpItem(InventoryObject inventoryObject){
+    public void PickUpItemIntoHotbar(InventoryObject inventoryObject){
 		OnPickUpItem?.Invoke(this, new OnPickUpItemEventArgs {
-			inventoryObject = inventoryObject
+			inventoryObject = inventoryObject,
+			itemGoesIntoHotbar = true
+		});
+    }
+
+	public void PickUpItemIntoInventory(InventoryObject inventoryObject){
+		OnPickUpItem?.Invoke(this, new OnPickUpItemEventArgs {
+			inventoryObject = inventoryObject,
+			itemGoesIntoHotbar = false
 		});
     }
 
@@ -66,6 +81,13 @@ public class EventManager : MonoBehaviour
 
 	public void AddItemToHotbar(int i, InventoryObject inventoryObject){
 		OnAddItemToHotbar?.Invoke(this, new OnAddItemToHotbarEventArgs {
+			i = i,
+			inventoryObject = inventoryObject
+		});
+	}
+
+	public void AddItemToInventory(int i, InventoryObject inventoryObject){
+		OnAddItemToInventory?.Invoke(this, new OnAddItemToInventoryEventArgs {
 			i = i,
 			inventoryObject = inventoryObject
 		});
