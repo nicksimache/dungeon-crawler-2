@@ -87,9 +87,9 @@ GameObject:
   - component: {fileID: 1131405540152322701}
   - component: {fileID: 8474952532890556986}
   - component: {fileID: 4064385732304119945}
-  - component: {fileID: 73299066182389708}
   - component: {fileID: 5044650652316481571}
   - component: {fileID: 5633938957204432723}
+  - component: {fileID: 3060421086701202732}
   m_Layer: 6
   m_Name: ProgressBarUI
   m_TagString: Untagged
@@ -183,25 +183,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &73299066182389708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 500120809814425006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aecca323284ea184fb29db2f4b9eabbf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactObject: {fileID: 3509619976695662615}
-  barImage: {fileID: 3496656625542657113}
-  visualGameObjectList:
-  - {fileID: 1020735252331353483}
-  - {fileID: 6185636921315953807}
-  - {fileID: 3930806666284447769}
-  - {fileID: 454596783667286188}
 --- !u!114 &5044650652316481571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,6 +218,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3060421086701202732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500120809814425006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a233f9c780ab84b418a9d176a5984b43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactObject: {fileID: 3509619976695662615}
+  barImage: {fileID: 3496656625542657113}
+  visualGameObjectList:
+  - {fileID: 1020735252331353483}
+  - {fileID: 6185636921315953807}
+  - {fileID: 3930806666284447769}
+  - {fileID: 454596783667286188}
 --- !u!1 &1020735252331353483
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,6 +467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e35f61fbc641d4ba864ee05bbd1fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item: {fileID: 0}
 --- !u!1 &2590622147678954265
 GameObject:
   m_ObjectHideFlags: 0

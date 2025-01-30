@@ -608,7 +608,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 309540264}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 193cdddb98de7304abd1b146f9feba42, type: 3}
+  m_Script: {fileID: 11500000, guid: 612e7d6cad9038c4d94e82c0f60d3146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hotbarItemPrefab: {fileID: 6156800907819760368, guid: 7828fa3eec1f3a54aa4460c95ccea34e, type: 3}
@@ -2960,31 +2960,6 @@ MonoBehaviour:
   gameInput: {fileID: 1411043246}
   toolbar: {fileID: 309540267}
   inventoryToolbar: {fileID: 1982878185}
-  playerInventoryObjectList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  hotbarImages: []
-  playerMainInventoryObjectList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  inventoryImages: []
-  numItemsInHotbar: 0
   playerCamera: {fileID: 330585545}
   walkSpeed: 6
   jumpPower: 7
@@ -3456,7 +3431,7 @@ GameObject:
   - component: {fileID: 1982878185}
   - component: {fileID: 1982878184}
   m_Layer: 5
-  m_Name: Toolbar (1)
+  m_Name: InventoryToolbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3605,12 +3580,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2002610136}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f4b533622925414ebe7691e0cad69d1, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a34f9f85fc39dc49848167997f576a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   visualGameObjectList:
   - {fileID: 1152859398}
   - {fileID: 1982878182}
+  hotbarItemPrefab: {fileID: 6156800907819760368, guid: 7828fa3eec1f3a54aa4460c95ccea34e, type: 3}
 --- !u!224 &2067234823 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2605492835486360272, guid: 1e0d01c9a0613cc4d8b04c88dbce97e5, type: 3}

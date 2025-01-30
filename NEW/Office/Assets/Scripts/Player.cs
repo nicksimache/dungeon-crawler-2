@@ -43,6 +43,8 @@ public class Player : MonoBehaviour {
 	private bool canMove = true;
 	private bool canMoveCamera = true;
 
+	private bool playerUsingComputer = false;
+
 	[SerializeField] private LayerMask interactLayerMask;
 	private InteractObject selectedObject;
 
@@ -247,15 +249,13 @@ public class Player : MonoBehaviour {
 
 	private void GameInput_OnOpenInventory(object sender, GameInput.OnOpenInventoryEventArgs e){
 		if(isInventoryOpen){
-			if(e.playerClosedInventory){
-				isInventoryOpen = false;
-				EventManager.Instance.OpenInventory(false);
+			isInventoryOpen = false;
+			EventManager.Instance.OpenInventory(false);
 
-				Cursor.visible = false;
-				Cursor.lockState = CursorLockMode.Locked;
+			Cursor.visible = false;
+			Cursor.lockState = CursorLockMode.Locked;
 
-				canMoveCamera = true;
-			}			
+			canMoveCamera = true;		
 		}
 		else {
 			if(!e.playerClosedInventory){
@@ -274,9 +274,11 @@ public class Player : MonoBehaviour {
     private void EventManager_OnAccessTerminal(object sender, EventManager.OnAccessTerminalEventArgs e){
 		if(e.openTerminal){
 			canMove = false;
+			playerUsingComputer = true;
 		}
 		else {
 			canMove = true;
+			playerUsingComputer = false;
 		}
     }
 
@@ -321,6 +323,10 @@ public class Player : MonoBehaviour {
 
 	public int GetNumInventoryObjectsOverall(){
 		return numItemsInHotbar + numItemInInventory;
+	}
+
+	public bool IsPlayerUsingComputer(){
+		return playerUsingComputer;
 	}
 
 }

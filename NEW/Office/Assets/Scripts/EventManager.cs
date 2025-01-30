@@ -74,9 +74,12 @@ public class EventManager : MonoBehaviour
 	}
 
 	public void OpenInventory(bool openInventory){
-		OnInteractInventory?.Invoke(this, new OnInteractInventoryEventArgs{
-			openInventory = openInventory
-		});
+		if(!Player.Instance.IsPlayerUsingComputer()){
+			OnInteractInventory?.Invoke(this, new OnInteractInventoryEventArgs{
+				openInventory = openInventory
+			});
+		}
+		
 	}
 
 	public void AddItemToHotbar(int i, InventoryObject inventoryObject){

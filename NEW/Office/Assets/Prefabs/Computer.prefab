@@ -772,10 +772,9 @@ GameObject:
   - component: {fileID: 2714055275419393683}
   - component: {fileID: 4735088153820825989}
   - component: {fileID: 7776667175525539647}
-  - component: {fileID: 6150783712434627715}
   - component: {fileID: 2351569766420349275}
   - component: {fileID: 2985438830432100965}
-  - component: {fileID: 1593387880699506991}
+  - component: {fileID: 1399194355169276731}
   m_Layer: 5
   m_Name: ProgressBarUI
   m_TagString: Untagged
@@ -869,25 +868,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6150783712434627715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7801289190016848592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aecca323284ea184fb29db2f4b9eabbf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactObject: {fileID: 0}
-  barImage: {fileID: 2663982138435847920}
-  visualGameObjectList:
-  - {fileID: 3919627177757228224}
-  - {fileID: 832120824177455265}
-  - {fileID: 5023637228745860686}
-  - {fileID: 8218974811006605126}
 --- !u!114 &2351569766420349275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -923,7 +903,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1593387880699506991
+--- !u!114 &1399194355169276731
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -932,9 +912,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7801289190016848592}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab8edbc599d9f8048ab0208bf08b76cd, type: 3}
+  m_Script: {fileID: 11500000, guid: a233f9c780ab84b418a9d176a5984b43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactObject: {fileID: 6737032718599971647}
+  barImage: {fileID: 2663982138435847920}
+  visualGameObjectList:
+  - {fileID: 3919627177757228224}
+  - {fileID: 832120824177455265}
+  - {fileID: 5023637228745860686}
+  - {fileID: 8218974811006605126}
 --- !u!1 &8218974811006605126
 GameObject:
   m_ObjectHideFlags: 0
