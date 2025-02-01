@@ -3,6 +3,8 @@ using System;
 
 public class GameInput : MonoBehaviour {
 
+	[SerializeField] private GameObject enemyPrefab; //temp
+
 	public event EventHandler OnInteractAction;
 	public event EventHandler OnStopInteract;
 	public event EventHandler OnCloseTerminal;
@@ -46,6 +48,10 @@ public class GameInput : MonoBehaviour {
 		}
 		else {
 			OnStopInteract?.Invoke(this, EventArgs.Empty);
+		}
+
+		if(Input.GetKeyDown(KeyCode.Q)){
+        	GameObject go = Instantiate(enemyPrefab, new Vector3(50,0,50), Quaternion.identity);
 		}
 				
 	}

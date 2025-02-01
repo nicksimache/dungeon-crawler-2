@@ -67,6 +67,7 @@ public class Generator2D : MonoBehaviour
     private void Awake()
     {
         Generate();
+        StartCoroutine(NavMeshBake.Instance.BakeAndCheckNavMesh());
     }
 
     private void Generate()
