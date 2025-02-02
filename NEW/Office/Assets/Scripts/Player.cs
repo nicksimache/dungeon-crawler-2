@@ -24,7 +24,9 @@ public class Player : NetworkBehaviour {
 	private int selectedHotbarSlot = -1;
 	private bool isInventoryOpen = false;
 
-	[SerializeField] private Camera playerCamera;
+	private Camera playerCamera;
+	[SerializeField] private GameObject mainCameraPrefab;
+
     [SerializeField] private float walkSpeed = 6f;
     [SerializeField] private float jumpPower = 7f;
     [SerializeField] private float gravity = 10f;
@@ -36,8 +38,7 @@ public class Player : NetworkBehaviour {
 	
 	private Vector3 moveDirection = Vector3.zero;
 	private float rotationX = 0;
-	private CharacterController characterController;
-	
+	private CharacterController characterController;	
 
 	private bool canMove = true;
 	private bool canMoveCamera = true;
@@ -66,6 +67,11 @@ public class Player : NetworkBehaviour {
 	}
 
     public void Start() {
+
+		if(IsOwner){
+			InstantiateMainCamera();
+		}
+
 		GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
 		GameInput.Instance.OnStopInteract += GameInput_OnStopInteract;
 		GameInput.Instance.OnCloseTerminal += GameInput_OnCloseTerminal;
@@ -83,7 +89,9 @@ public class Player : NetworkBehaviour {
     }
 
 	void Update() {
-		//FillHotbar();
+		if(!IsOwner){
+			return;
+		}
 		HandleInventory();
 		HandleInteractions();
 		
@@ -170,6 +178,14 @@ public class Player : NetworkBehaviour {
 				playerMainInventoryObjectList[i] = null;
 			}
 		}
+	}
+
+	private void InstantiateMainCamera(){
+		Debug.Log("Main Camera instnatiasdasdasdsa");
+		GameObject go = Instantiate(mainCameraPrefab, new Vector3(0,0,0), Quaternion.identity);
+		playerCamera = go.GetComponent<Camera>();
+		playerCamera.transform.SetParent(gameObject.transform);
+		playerCamera.transform.localPosition = Vector3.zero;
 	}
 
 	public GameObject lastHit;

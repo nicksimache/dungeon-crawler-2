@@ -8,6 +8,7 @@ public class NetworkEventHandler : MonoBehaviour
 
     private void Start(){
         NetworkManager.Singleton.OnServerStarted += OnServerStarted;
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnect;
     }
 
     private void OnServerStarted(){
@@ -21,6 +22,10 @@ public class NetworkEventHandler : MonoBehaviour
         {
             Debug.Log("🟡 Dedicated Server started!");
         }
+    }
+
+    private void OnClientConnect(ulong clientId){
+        Destroy(cameraToDestroy);
     }
     
 }
