@@ -14,6 +14,24 @@ public class EventManager : MonoBehaviour
 		}
     }
 
+	/// PLAYER EVENTS 
+
+	public event EventHandler<OnSelectedObjectChangedEventArgs> OnSelectedObjectChanged;
+	public class OnSelectedObjectChangedEventArgs : EventArgs {
+		public InteractObject selectedObject;
+		public float distance;
+	}
+
+	public void SelectedObjectChanged(InteractObject selectedObject, float distance){
+		OnSelectedObjectChanged?.Invoke(this, new OnSelectedObjectChangedEventArgs{
+			selectedObject = selectedObject,
+			distance = distance
+		});
+	}
+
+
+	/// PLAYER EVENTS
+
     public event EventHandler<OnPickUpItemEventArgs> OnPickUpItem;
     public class OnPickUpItemEventArgs : EventArgs {
 		public InventoryObject inventoryObject;

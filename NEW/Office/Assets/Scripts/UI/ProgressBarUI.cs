@@ -27,12 +27,12 @@ public class ProgressBarUI : MonoBehaviour
 		interactObject.OnInteractProgressChanged += InteractObject_OnInteractProgressChanged;	
 		interactObject.OnResetProgressBar += InteractObject_OnResetProgressBar;
 
-		//Player.Instance.OnSelectedObjectChanged += Player_OnSelectedObjectChanged;
+		EventManager.Instance.OnSelectedObjectChanged += EventManager_OnSelectedObjectChanged;
 
     }
 
 	private InteractObject lastSelectedObject;
-    private void Player_OnSelectedObjectChanged(object sender, Player.OnSelectedObjectChangedEventArgs e)
+    private void EventManager_OnSelectedObjectChanged(object sender, EventManager.OnSelectedObjectChangedEventArgs e)
 {
 		if (e.selectedObject == interactObject)
 		{

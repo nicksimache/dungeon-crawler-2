@@ -48,12 +48,6 @@ public class Player : NetworkBehaviour {
 	[SerializeField] private LayerMask interactLayerMask;
 	private InteractObject selectedObject;
 
-	public event EventHandler<OnSelectedObjectChangedEventArgs> OnSelectedObjectChanged;
-	public class OnSelectedObjectChangedEventArgs : EventArgs {
-		public InteractObject selectedObject;
-		public float distance;
-	}
-
 
 	private void Awake(){
 		//Instance = this;
@@ -216,10 +210,7 @@ public class Player : NetworkBehaviour {
 	private void SetSelectedObject(InteractObject interactObject, float distance){
 		this.selectedObject = interactObject;
 
-		OnSelectedObjectChanged?.Invoke(this, new OnSelectedObjectChangedEventArgs {
-			selectedObject = selectedObject,
-			distance = distance
-		});
+		EventManager.Instance.SelectedObjectChanged(selectedObject, distance);
 	}
 
 	private void GameInput_OnSwitchHotbarSelectedItem (object sender, GameInput.OnSwitchHotbarSelectedItemEventArgs e){
