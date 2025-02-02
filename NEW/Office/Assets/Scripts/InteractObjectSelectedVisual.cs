@@ -6,7 +6,7 @@ public class InteractObjectSelectedVisual : MonoBehaviour
 	[SerializeField] private GameObject visualGameObject;
 
 	private void Start(){
-		Player.Instance.OnSelectedObjectChanged += Player_OnSelectedObjectChanged;
+		//Player.Instance.OnSelectedObjectChanged += Player_OnSelectedObjectChanged;
 	}
 
 	private void Player_OnSelectedObjectChanged(object sender, Player.OnSelectedObjectChangedEventArgs e) {

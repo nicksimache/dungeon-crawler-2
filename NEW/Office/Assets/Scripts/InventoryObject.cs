@@ -7,7 +7,7 @@ public class InventoryObject : InteractObject
 
 	private void Update(){
 		if(interactProgress == interactProgressMax){
-
+/*
 			if(EventManager.Instance == null){
 				Debug.LogError("No instance of event manager");
 				return;
@@ -22,6 +22,7 @@ public class InventoryObject : InteractObject
 				MakeCanInteract(false);
 				interactProgress = 0f;
 			}
+			*/
 		}
 	}
 

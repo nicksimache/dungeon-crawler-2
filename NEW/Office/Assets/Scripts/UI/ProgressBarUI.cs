@@ -27,7 +27,7 @@ public class ProgressBarUI : MonoBehaviour
 		interactObject.OnInteractProgressChanged += InteractObject_OnInteractProgressChanged;	
 		interactObject.OnResetProgressBar += InteractObject_OnResetProgressBar;
 
-		Player.Instance.OnSelectedObjectChanged += Player_OnSelectedObjectChanged;
+		//Player.Instance.OnSelectedObjectChanged += Player_OnSelectedObjectChanged;
 
     }
 

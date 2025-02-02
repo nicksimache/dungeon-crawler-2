@@ -2,13 +2,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
+using Unity.Netcode;
 
 
-public class Player : MonoBehaviour {
+public class Player : NetworkBehaviour {
 	
-	public static Player Instance { get; private set; } 
-
-	[SerializeField] private GameInput gameInput;
+	//public static Player Instance { get; private set; } 
 
 	[SerializeField] private Image toolbar;
 	[SerializeField] private Image inventoryToolbar;
@@ -56,10 +55,7 @@ public class Player : MonoBehaviour {
 
 
 	private void Awake(){
-		if(Instance != null){
-			Debug.LogError("Already have an instance of a player");
-		}
-		Instance = this;
+		//Instance = this;
 
 		foreach(Transform child in toolbar.transform){
 			hotbarImages.Add(child);
@@ -70,12 +66,12 @@ public class Player : MonoBehaviour {
 	}
 
     public void Start() {
-		gameInput.OnInteractAction += GameInput_OnInteractAction;
-		gameInput.OnStopInteract += GameInput_OnStopInteract;
-		gameInput.OnCloseTerminal += GameInput_OnCloseTerminal;
-		gameInput.OnCloseChest += GameInput_OnCloseChest;
-		gameInput.OnOpenInventory += GameInput_OnOpenInventory;
-		gameInput.OnSwitchHotbarSelectedItem += GameInput_OnSwitchHotbarSelectedItem;
+		GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
+		GameInput.Instance.OnStopInteract += GameInput_OnStopInteract;
+		GameInput.Instance.OnCloseTerminal += GameInput_OnCloseTerminal;
+		GameInput.Instance.OnCloseChest += GameInput_OnCloseChest;
+		GameInput.Instance.OnOpenInventory += GameInput_OnOpenInventory;
+		GameInput.Instance.OnSwitchHotbarSelectedItem += GameInput_OnSwitchHotbarSelectedItem;
 
 		EventManager.Instance.OnAccessTerminal += EventManager_OnAccessTerminal;
 

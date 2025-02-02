@@ -3,6 +3,8 @@ using System;
 
 public class GameInput : MonoBehaviour {
 
+	public static GameInput Instance;
+
 	[SerializeField] private GameObject enemyPrefab; //temp
 
 	public event EventHandler OnInteractAction;
@@ -36,6 +38,13 @@ public class GameInput : MonoBehaviour {
         inputSystemActions.Player.InventorySlot5.performed += _ => SwitchHotbarSlot(4);
 		inputSystemActions.Player.OpenInventory.performed += _ => OpenInventory();
 		inputSystemActions.Player.CloseTerminal.performed += _ => HandleEscPress();
+
+		if(Instance == null){
+			Instance = this;
+		}
+		else {
+			Destroy(gameObject);
+		}
 	}
 
 	public bool IsPlayerInteracting() {
