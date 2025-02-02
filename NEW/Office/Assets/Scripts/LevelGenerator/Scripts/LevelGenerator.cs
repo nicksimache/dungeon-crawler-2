@@ -58,6 +58,8 @@ public class Generator2D : MonoBehaviour
     [SerializeField] private Material orangeMaterial;
     [SerializeField] private Material blackMaterial;
 
+    [SerializeField] GameObject level;
+
     private Random random;
     private Grid2D<CellType> grid;
     private List<Room> rooms;
@@ -338,17 +340,19 @@ public class Generator2D : MonoBehaviour
         }
     }
 
-    void PlaceRoom(Vector2Int location, Vector2Int roomSize, GameObject roomPrefab)
+    private void PlaceRoom(Vector2Int location, Vector2Int roomSize, GameObject roomPrefab)
     {
         float roomLocationX = location.x + (float)(roomSize.x) / 2 - 0.5f;
         float roomLocationY = location.y + (float)(roomSize.y) / 2 - 0.5f;
         GameObject go = Instantiate(roomPrefab, new Vector3(roomLocationX, 0, roomLocationY), Quaternion.identity);
+        go.transform.SetParent(level.transform);
     }
 
-    void PlaceHallway(Vector2Int location, Material color)
+    private void PlaceHallway(Vector2Int location, Material color)
     {
         hallwayPrefab.transform.GetChild(0).GetComponent<MeshRenderer>().material = color;
         GameObject go = Instantiate(hallwayPrefab, new Vector3(location.x, 0, location.y), Quaternion.identity);
+        go.transform.SetParent(level.transform);
     }
 
     List<Vector2Int> GetRoomPositions(Vector2Int location, Vector2Int size)
