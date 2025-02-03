@@ -17,7 +17,7 @@ public class InventoryObject : InteractObject
 				gameObject.SetActive(false);
 			} else if(Player.LocalInstance.GetNumInventoryObjectsOverall() < 20) {
 				EventManager.Instance.PickUpItemIntoInventory(this);
-				gameObject.SetActive(false);				
+				gameObject.SetActive(false);		
 			} else {
 				MakeCanInteract(false);
 				interactProgress = 0f;
