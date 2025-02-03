@@ -251,7 +251,7 @@ public class Player : NetworkBehaviour {
 	}
 
 	private void GameInput_OnUseItem(object sender, EventArgs e){
-		if(playerInventoryObjectList[selectedHotbarSlot] != null){
+		if(selectedHotbarSlot != -1 && playerInventoryObjectList[selectedHotbarSlot] != null){
 			if(playerInventoryObjectList[selectedHotbarSlot].GetInventoryObjectSO() is GunItem gunItem){
 				gunItem.Shoot();
 			}
