@@ -32,8 +32,8 @@ public class ProgressBarUI : MonoBehaviour
     }
 
 	private InteractObject lastSelectedObject;
-    private void EventManager_OnSelectedObjectChanged(object sender, EventManager.OnSelectedObjectChangedEventArgs e)
-{
+    private void EventManager_OnSelectedObjectChanged(object sender, EventManager.OnSelectedObjectChangedEventArgs e){
+		
 		if (e.selectedObject == interactObject)
 		{
 			foreach (GameObject gameObject in visualGameObjectList)
