@@ -4,8 +4,13 @@ using UnityEngine;
 public class _BaseItem : ScriptableObject
 {
     [SerializeField] private Sprite itemSprite;
+    [SerializeField] private GameObject itemPrefab;
 
     public Sprite GetItemSprite(){
         return itemSprite;
+    }
+
+    public GameObject GetItemPrefab(){
+        return itemPrefab;
     }
 }

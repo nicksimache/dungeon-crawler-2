@@ -25,6 +25,7 @@ public class Player : NetworkBehaviour {
 
 	private Camera playerCamera;
 	[SerializeField] private GameObject mainCameraPrefab;
+	private GameObject heldItem = null;
 
     [SerializeField] private float walkSpeed = 6f;
     [SerializeField] private float jumpPower = 7f;
@@ -34,6 +35,8 @@ public class Player : NetworkBehaviour {
     [SerializeField] private float defaultHeight = 2f;
    	[SerializeField] private float crouchHeight = 1f;
    	[SerializeField] private float crouchSpeed = 3f;
+
+	[SerializeField] private Vector3 playerItemPosition;
 	
 	private Vector3 moveDirection = Vector3.zero;
 	private float rotationX = 0;
@@ -131,24 +134,6 @@ public class Player : NetworkBehaviour {
         }
     }
 
-	//not using anymore
-	private void FillHotbar(){
-		for(int i = 0 ; i < Mathf.Min(hotbarImages.Count, 5); i++){
-			if(selectedHotbarSlot != -1 && i == selectedHotbarSlot){
-				hotbarImages[i].transform.localScale = new Vector3(1.05f, 1.05f, 1.05f);
-			}
-			else {
-				hotbarImages[i].transform.localScale = new Vector3(1f, 1f, 1f);
-			}
-
-			if(playerInventoryObjectList != null && playerInventoryObjectList[i] != null){
-				hotbarImages[i].transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-				hotbarImages[i].transform.GetChild(0).GetComponent<Image>().sprite = playerInventoryObjectList[i].GetInventoryObjectSprite();
-
-			}
-		}
-	}
-
 	private void HandleInventory(){
 		numItemsInHotbar = 0;
 		for(int i = 0; i < 5; i++){
@@ -158,6 +143,20 @@ public class Player : NetworkBehaviour {
 			}
 			else {
 				playerInventoryObjectList[i] = null;
+			}
+
+			if(i == selectedHotbarSlot){
+				hotbarImages[i].transform.localScale = new Vector3(1.05f, 1.05f, 1.05f);
+				if(playerInventoryObjectList[i] != null && heldItem == null){
+					heldItem = Instantiate(playerInventoryObjectList[i].GetInventoryObjectSO().GetItemPrefab(), new Vector3(0,0,0), Quaternion.identity);
+					heldItem.transform.SetParent(transform);
+					heldItem.transform.localPosition = playerItemPosition;
+					heldItem.layer = LayerMask.NameToLayer("Default");
+
+				}
+			}
+			else {
+				hotbarImages[i].transform.localScale = new Vector3(1f, 1f, 1f);
 			}
 		}
 		numItemInInventory = 0;
@@ -218,6 +217,8 @@ public class Player : NetworkBehaviour {
 		else {
 			selectedHotbarSlot = -1;
 		}
+		Destroy(heldItem);
+		heldItem = null;
 	}
 
     private void GameInput_OnInteractAction (object sender, EventArgs e){

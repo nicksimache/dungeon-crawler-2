@@ -29,4 +29,8 @@ public class InventoryObject : InteractObject
 	public Sprite GetInventoryObjectSprite(){
 		return item.GetItemSprite();
 	}
+
+	public _BaseItem GetInventoryObjectSO(){
+		return item;
+	}
 }
