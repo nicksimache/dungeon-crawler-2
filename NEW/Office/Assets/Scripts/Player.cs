@@ -73,6 +73,7 @@ public class Player : NetworkBehaviour {
 		GameInput.Instance.OnCloseChest += GameInput_OnCloseChest;
 		GameInput.Instance.OnOpenInventory += GameInput_OnOpenInventory;
 		GameInput.Instance.OnSwitchHotbarSelectedItem += GameInput_OnSwitchHotbarSelectedItem;
+		GameInput.Instance.OnUseItem += GameInput_OnUseItem;
 
 		EventManager.Instance.OnAccessTerminal += EventManager_OnAccessTerminal;
 
@@ -245,6 +246,14 @@ public class Player : NetworkBehaviour {
 		if(selectedObject != null){
 			if(selectedObject.TryGetComponent(out ChestObject chestObject)){
 				chestObject.CloseChest();
+			}
+		}
+	}
+
+	private void GameInput_OnUseItem(object sender, EventArgs e){
+		if(playerInventoryObjectList[selectedHotbarSlot] != null){
+			if(playerInventoryObjectList[selectedHotbarSlot].GetInventoryObjectSO() is GunItem gunItem){
+				gunItem.Shoot();
 			}
 		}
 	}

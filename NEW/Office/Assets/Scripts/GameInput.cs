@@ -16,6 +16,7 @@ public class GameInput : MonoBehaviour {
 	}
 
 	public event EventHandler OnCloseChest;
+	public event EventHandler OnUseItem;
 
 
 	public event EventHandler<OnSwitchHotbarSelectedItemEventArgs> OnSwitchHotbarSelectedItem;
@@ -38,6 +39,7 @@ public class GameInput : MonoBehaviour {
         inputSystemActions.Player.InventorySlot5.performed += _ => SwitchHotbarSlot(4);
 		inputSystemActions.Player.OpenInventory.performed += _ => OpenInventory();
 		inputSystemActions.Player.CloseTerminal.performed += _ => HandleEscPress();
+		inputSystemActions.Player.UseItem.performed += _ => UseItem();
 
 		if(Instance == null){
 			Instance = this;
@@ -85,6 +87,10 @@ public class GameInput : MonoBehaviour {
 		});
 	}
 
+	private void UseItem(){
+		OnUseItem?.Invoke(this, EventArgs.Empty);
+	}
+
 	private void OnDestroy(){
         inputSystemActions.Player.InventorySlot1.performed -= _ => SwitchHotbarSlot(0);
         inputSystemActions.Player.InventorySlot2.performed -= _ => SwitchHotbarSlot(1);
@@ -93,6 +99,7 @@ public class GameInput : MonoBehaviour {
         inputSystemActions.Player.InventorySlot5.performed -= _ => SwitchHotbarSlot(4);
 		inputSystemActions.Player.OpenInventory.performed -= _ => OpenInventory();
 		inputSystemActions.Player.CloseTerminal.performed -= _ => HandleEscPress();
+		inputSystemActions.Player.UseItem.performed -= _ => UseItem();
 
 	}
 
