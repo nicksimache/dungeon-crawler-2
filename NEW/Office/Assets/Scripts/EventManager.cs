@@ -92,13 +92,13 @@ public class EventManager : MonoBehaviour
 	}
 
 	public void OpenInventory(bool openInventory){
-		/*
-		if(!Player.Instance.IsPlayerUsingComputer()){
+		
+		if(!Player.LocalInstance.IsPlayerUsingComputer()){
 			OnInteractInventory?.Invoke(this, new OnInteractInventoryEventArgs{
 				openInventory = openInventory
 			});
 		}
-		*/
+		
 		
 	}
 

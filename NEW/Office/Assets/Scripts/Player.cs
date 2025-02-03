@@ -7,11 +7,10 @@ using Unity.Netcode;
 
 public class Player : NetworkBehaviour {
 	
-	//public static Player Instance { get; private set; } 
+	public static Player LocalInstance { get; private set; } 
 
-	[SerializeField] private Image toolbar;
-	[SerializeField] private Image inventoryToolbar;
-	[Header("TESTING")]
+	private Image toolbar;
+	private Image inventoryToolbar;
 	private InventoryObject[] playerInventoryObjectList = new InventoryObject[5]; // THIS IS FOR THE HOTBAR
 	private List<Transform> hotbarImages = new List<Transform>(); // list of hotbar slots (images)
 
@@ -48,9 +47,10 @@ public class Player : NetworkBehaviour {
 	[SerializeField] private LayerMask interactLayerMask;
 	private InteractObject selectedObject;
 
+    public void Start() {
 
-	private void Awake(){
-		//Instance = this;
+		toolbar = UIManager.Instance.toolbar;
+		inventoryToolbar = UIManager.Instance.inventoryToolbar;
 
 		foreach(Transform child in toolbar.transform){
 			hotbarImages.Add(child);
@@ -58,11 +58,9 @@ public class Player : NetworkBehaviour {
 		foreach(Transform child in inventoryToolbar.transform){
 			inventoryImages.Add(child);
 		}
-	}
-
-    public void Start() {
 
 		if(IsOwner){
+			LocalInstance = this;
 			InstantiateMainCamera();
 		}
 

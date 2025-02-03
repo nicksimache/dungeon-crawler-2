@@ -40,9 +40,11 @@ public class ProgressBarUI : MonoBehaviour
 			{
 				gameObject.SetActive(true);
 			}
-
-			animator.Play(POP_UP);
-			interactObject.MakeCanInteract(true);
+			if(gameObject.activeInHierarchy){
+				animator.Play(POP_UP);
+				interactObject.MakeCanInteract(true);
+			}
+			
 
 		}
 		else
@@ -51,9 +53,11 @@ public class ProgressBarUI : MonoBehaviour
 			{
 				gameObject.SetActive(false);
 			}
-
-			animator.Play(PROGRESS_BAR_IDLE);
-			interactObject.MakeCanInteract(false);
+			if(gameObject.activeInHierarchy){
+				animator.Play(PROGRESS_BAR_IDLE);
+				interactObject.MakeCanInteract(false);				
+			}
+			
 		}
 
 		lastSelectedObject = e.selectedObject;
