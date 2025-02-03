@@ -431,7 +431,7 @@ GameObject:
   - component: {fileID: 929040017743017260}
   - component: {fileID: 3509619976695662615}
   m_Layer: 6
-  m_Name: InventoryObjectPrefab
+  m_Name: InventoryObject5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -467,7 +467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e35f61fbc641d4ba864ee05bbd1fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item: {fileID: 11400000, guid: 6a4db84a8cfbc1a4f873c6510d9cd463, type: 2}
 --- !u!1 &2590622147678954265
 GameObject:
   m_ObjectHideFlags: 0

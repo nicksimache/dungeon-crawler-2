@@ -27,12 +27,12 @@ public class ProgressBarUI : MonoBehaviour
 		interactObject.OnInteractProgressChanged += InteractObject_OnInteractProgressChanged;	
 		interactObject.OnResetProgressBar += InteractObject_OnResetProgressBar;
 
-		Player.Instance.OnSelectedObjectChanged += Player_OnSelectedObjectChanged;
+		EventManager.Instance.OnSelectedObjectChanged += EventManager_OnSelectedObjectChanged;
 
     }
 
 	private InteractObject lastSelectedObject;
-    private void Player_OnSelectedObjectChanged(object sender, Player.OnSelectedObjectChangedEventArgs e)
+    private void EventManager_OnSelectedObjectChanged(object sender, EventManager.OnSelectedObjectChangedEventArgs e)
 {
 		if (e.selectedObject == interactObject)
 		{
@@ -40,9 +40,11 @@ public class ProgressBarUI : MonoBehaviour
 			{
 				gameObject.SetActive(true);
 			}
-
-			animator.Play(POP_UP);
-			interactObject.MakeCanInteract(true);
+			if(gameObject.activeInHierarchy){
+				animator.Play(POP_UP);
+				interactObject.MakeCanInteract(true);
+			}
+			
 
 		}
 		else
@@ -51,9 +53,11 @@ public class ProgressBarUI : MonoBehaviour
 			{
 				gameObject.SetActive(false);
 			}
-
-			animator.Play(PROGRESS_BAR_IDLE);
-			interactObject.MakeCanInteract(false);
+			if(gameObject.activeInHierarchy){
+				animator.Play(PROGRESS_BAR_IDLE);
+				interactObject.MakeCanInteract(false);				
+			}
+			
 		}
 
 		lastSelectedObject = e.selectedObject;

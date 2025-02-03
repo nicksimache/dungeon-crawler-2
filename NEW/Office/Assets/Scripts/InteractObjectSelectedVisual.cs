@@ -6,10 +6,10 @@ public class InteractObjectSelectedVisual : MonoBehaviour
 	[SerializeField] private GameObject visualGameObject;
 
 	private void Start(){
-		Player.Instance.OnSelectedObjectChanged += Player_OnSelectedObjectChanged;
+		EventManager.Instance.OnSelectedObjectChanged += EventManager_OnSelectedObjectChanged;
 	}
 
-	private void Player_OnSelectedObjectChanged(object sender, Player.OnSelectedObjectChangedEventArgs e) {
+	private void EventManager_OnSelectedObjectChanged(object sender, EventManager.OnSelectedObjectChangedEventArgs e) {
 		if(e.selectedObject == interactObject){
 			visualGameObject.SetActive(true);
 		}

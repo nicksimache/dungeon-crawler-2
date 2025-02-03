@@ -17,6 +17,9 @@ public class LookAtCamera : MonoBehaviour
 
     private void LateUpdate()
     {
+        if(Player.LocalInstance == null){
+            return;
+        }
         switch (mode) 
         {
             case Mode.LookAt:

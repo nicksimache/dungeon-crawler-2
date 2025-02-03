@@ -2,17 +2,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
+using Unity.Netcode;
 
 
-public class Player : MonoBehaviour {
+public class Player : NetworkBehaviour {
 	
-	public static Player Instance { get; private set; } 
+	public static Player LocalInstance { get; private set; } 
 
-	[SerializeField] private GameInput gameInput;
-
-	[SerializeField] private Image toolbar;
-	[SerializeField] private Image inventoryToolbar;
-	[Header("TESTING")]
+	private Image toolbar;
+	private Image inventoryToolbar;
 	private InventoryObject[] playerInventoryObjectList = new InventoryObject[5]; // THIS IS FOR THE HOTBAR
 	private List<Transform> hotbarImages = new List<Transform>(); // list of hotbar slots (images)
 
@@ -25,7 +23,10 @@ public class Player : MonoBehaviour {
 	private int selectedHotbarSlot = -1;
 	private bool isInventoryOpen = false;
 
-	[SerializeField] private Camera playerCamera;
+	private Camera playerCamera;
+	[SerializeField] private GameObject mainCameraPrefab;
+	private GameObject heldItem = null;
+
     [SerializeField] private float walkSpeed = 6f;
     [SerializeField] private float jumpPower = 7f;
     [SerializeField] private float gravity = 10f;
@@ -34,11 +35,12 @@ public class Player : MonoBehaviour {
     [SerializeField] private float defaultHeight = 2f;
    	[SerializeField] private float crouchHeight = 1f;
    	[SerializeField] private float crouchSpeed = 3f;
+
+	[SerializeField] private Vector3 playerItemPosition;
 	
 	private Vector3 moveDirection = Vector3.zero;
 	private float rotationX = 0;
-	private CharacterController characterController;
-	
+	private CharacterController characterController;	
 
 	private bool canMove = true;
 	private bool canMoveCamera = true;
@@ -48,18 +50,10 @@ public class Player : MonoBehaviour {
 	[SerializeField] private LayerMask interactLayerMask;
 	private InteractObject selectedObject;
 
-	public event EventHandler<OnSelectedObjectChangedEventArgs> OnSelectedObjectChanged;
-	public class OnSelectedObjectChangedEventArgs : EventArgs {
-		public InteractObject selectedObject;
-		public float distance;
-	}
+    public void Start() {
 
-
-	private void Awake(){
-		if(Instance != null){
-			Debug.LogError("Already have an instance of a player");
-		}
-		Instance = this;
+		toolbar = UIManager.Instance.toolbar;
+		inventoryToolbar = UIManager.Instance.inventoryToolbar;
 
 		foreach(Transform child in toolbar.transform){
 			hotbarImages.Add(child);
@@ -67,15 +61,18 @@ public class Player : MonoBehaviour {
 		foreach(Transform child in inventoryToolbar.transform){
 			inventoryImages.Add(child);
 		}
-	}
 
-    public void Start() {
-		gameInput.OnInteractAction += GameInput_OnInteractAction;
-		gameInput.OnStopInteract += GameInput_OnStopInteract;
-		gameInput.OnCloseTerminal += GameInput_OnCloseTerminal;
-		gameInput.OnCloseChest += GameInput_OnCloseChest;
-		gameInput.OnOpenInventory += GameInput_OnOpenInventory;
-		gameInput.OnSwitchHotbarSelectedItem += GameInput_OnSwitchHotbarSelectedItem;
+		if(IsOwner){
+			LocalInstance = this;
+			InstantiateMainCamera();
+		}
+
+		GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
+		GameInput.Instance.OnStopInteract += GameInput_OnStopInteract;
+		GameInput.Instance.OnCloseTerminal += GameInput_OnCloseTerminal;
+		GameInput.Instance.OnCloseChest += GameInput_OnCloseChest;
+		GameInput.Instance.OnOpenInventory += GameInput_OnOpenInventory;
+		GameInput.Instance.OnSwitchHotbarSelectedItem += GameInput_OnSwitchHotbarSelectedItem;
 
 		EventManager.Instance.OnAccessTerminal += EventManager_OnAccessTerminal;
 
@@ -87,7 +84,9 @@ public class Player : MonoBehaviour {
     }
 
 	void Update() {
-		//FillHotbar();
+		if(!IsOwner){
+			return;
+		}
 		HandleInventory();
 		HandleInteractions();
 		
@@ -135,24 +134,6 @@ public class Player : MonoBehaviour {
         }
     }
 
-	//not using anymore
-	private void FillHotbar(){
-		for(int i = 0 ; i < Mathf.Min(hotbarImages.Count, 5); i++){
-			if(selectedHotbarSlot != -1 && i == selectedHotbarSlot){
-				hotbarImages[i].transform.localScale = new Vector3(1.05f, 1.05f, 1.05f);
-			}
-			else {
-				hotbarImages[i].transform.localScale = new Vector3(1f, 1f, 1f);
-			}
-
-			if(playerInventoryObjectList != null && playerInventoryObjectList[i] != null){
-				hotbarImages[i].transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-				hotbarImages[i].transform.GetChild(0).GetComponent<Image>().sprite = playerInventoryObjectList[i].GetInventoryObjectSprite();
-
-			}
-		}
-	}
-
 	private void HandleInventory(){
 		numItemsInHotbar = 0;
 		for(int i = 0; i < 5; i++){
@@ -162,6 +143,20 @@ public class Player : MonoBehaviour {
 			}
 			else {
 				playerInventoryObjectList[i] = null;
+			}
+
+			if(i == selectedHotbarSlot){
+				hotbarImages[i].transform.localScale = new Vector3(1.05f, 1.05f, 1.05f);
+				if(playerInventoryObjectList[i] != null && heldItem == null){
+					heldItem = Instantiate(playerInventoryObjectList[i].GetInventoryObjectSO().GetItemPrefab(), new Vector3(0,0,0), Quaternion.identity);
+					heldItem.transform.SetParent(transform);
+					heldItem.transform.localPosition = playerItemPosition;
+					heldItem.layer = LayerMask.NameToLayer("Default");
+
+				}
+			}
+			else {
+				hotbarImages[i].transform.localScale = new Vector3(1f, 1f, 1f);
 			}
 		}
 		numItemInInventory = 0;
@@ -174,6 +169,14 @@ public class Player : MonoBehaviour {
 				playerMainInventoryObjectList[i] = null;
 			}
 		}
+	}
+
+	private void InstantiateMainCamera(){
+		Debug.Log("Main Camera instnatiasdasdasdsa");
+		GameObject go = Instantiate(mainCameraPrefab, new Vector3(0,0,0), Quaternion.identity);
+		playerCamera = go.GetComponent<Camera>();
+		playerCamera.transform.SetParent(gameObject.transform);
+		playerCamera.transform.localPosition = Vector3.zero;
 	}
 
 	public GameObject lastHit;
@@ -204,10 +207,7 @@ public class Player : MonoBehaviour {
 	private void SetSelectedObject(InteractObject interactObject, float distance){
 		this.selectedObject = interactObject;
 
-		OnSelectedObjectChanged?.Invoke(this, new OnSelectedObjectChangedEventArgs {
-			selectedObject = selectedObject,
-			distance = distance
-		});
+		EventManager.Instance.SelectedObjectChanged(selectedObject, distance);
 	}
 
 	private void GameInput_OnSwitchHotbarSelectedItem (object sender, GameInput.OnSwitchHotbarSelectedItemEventArgs e){
@@ -217,6 +217,8 @@ public class Player : MonoBehaviour {
 		else {
 			selectedHotbarSlot = -1;
 		}
+		Destroy(heldItem);
+		heldItem = null;
 	}
 
     private void GameInput_OnInteractAction (object sender, EventArgs e){
