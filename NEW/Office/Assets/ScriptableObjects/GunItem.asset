@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSprite: {fileID: 21300000, guid: 9f1ff001a452e09489c6ca85df521aa2, type: 3}
   itemPrefab: {fileID: 7835101732040466477, guid: 2a5f3e1bb20b6a2469bc693685cebdfb, type: 3}
+  bulletPrefab: {fileID: 1715575640156672009, guid: 7187d57b446611945b7b6174cb5bc8dd, type: 3}
+  bulletStartingPosition: {x: 0.61, y: -0.082, z: 0.561}
+  bulletSpeed: 20
