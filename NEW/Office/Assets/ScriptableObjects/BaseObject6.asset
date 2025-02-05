@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BaseObject6
   m_EditorClassIdentifier: 
   itemSprite: {fileID: 21300000, guid: faeb94700a074394f8a44d7231de2566, type: 3}
-  itemPrefab: {fileID: 2570317573142644233, guid: 4726e2df47a294146851764232471a05, type: 3}
+  itemPrefab: {fileID: 2258800688550346680, guid: 288a918fed6913f4c868f8231479d71e, type: 3}

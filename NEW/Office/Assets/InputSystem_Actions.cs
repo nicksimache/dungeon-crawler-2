@@ -98,6 +98,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""50de7b2d-67f5-4e40-9774-b513fd534f7b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -188,6 +197,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""OpenInventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2f4d9db-8450-48ae-abbe-555a9be10b30"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -204,6 +224,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_InventorySlot4 = m_Player.FindAction("InventorySlot4", throwIfNotFound: true);
         m_Player_InventorySlot5 = m_Player.FindAction("InventorySlot5", throwIfNotFound: true);
         m_Player_OpenInventory = m_Player.FindAction("OpenInventory", throwIfNotFound: true);
+        m_Player_UseItem = m_Player.FindAction("UseItem", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -278,6 +299,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_InventorySlot4;
     private readonly InputAction m_Player_InventorySlot5;
     private readonly InputAction m_Player_OpenInventory;
+    private readonly InputAction m_Player_UseItem;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -290,6 +312,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @InventorySlot4 => m_Wrapper.m_Player_InventorySlot4;
         public InputAction @InventorySlot5 => m_Wrapper.m_Player_InventorySlot5;
         public InputAction @OpenInventory => m_Wrapper.m_Player_OpenInventory;
+        public InputAction @UseItem => m_Wrapper.m_Player_UseItem;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -323,6 +346,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @OpenInventory.started += instance.OnOpenInventory;
             @OpenInventory.performed += instance.OnOpenInventory;
             @OpenInventory.canceled += instance.OnOpenInventory;
+            @UseItem.started += instance.OnUseItem;
+            @UseItem.performed += instance.OnUseItem;
+            @UseItem.canceled += instance.OnUseItem;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -351,6 +377,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @OpenInventory.started -= instance.OnOpenInventory;
             @OpenInventory.performed -= instance.OnOpenInventory;
             @OpenInventory.canceled -= instance.OnOpenInventory;
+            @UseItem.started -= instance.OnUseItem;
+            @UseItem.performed -= instance.OnUseItem;
+            @UseItem.canceled -= instance.OnUseItem;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -378,5 +407,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnInventorySlot4(InputAction.CallbackContext context);
         void OnInventorySlot5(InputAction.CallbackContext context);
         void OnOpenInventory(InputAction.CallbackContext context);
+        void OnUseItem(InputAction.CallbackContext context);
     }
 }

@@ -26,6 +26,7 @@ public class Player : NetworkBehaviour {
 	private Camera playerCamera;
 	[SerializeField] private GameObject mainCameraPrefab;
 	private GameObject heldItem = null;
+	[SerializeField] private GameObject playerHoldPosition;
 
     [SerializeField] private float walkSpeed = 6f;
     [SerializeField] private float jumpPower = 7f;
@@ -35,8 +36,6 @@ public class Player : NetworkBehaviour {
     [SerializeField] private float defaultHeight = 2f;
    	[SerializeField] private float crouchHeight = 1f;
    	[SerializeField] private float crouchSpeed = 3f;
-
-	[SerializeField] private Vector3 playerItemPosition;
 	
 	private Vector3 moveDirection = Vector3.zero;
 	private float rotationX = 0;
@@ -51,6 +50,8 @@ public class Player : NetworkBehaviour {
 	private InteractObject selectedObject;
 
     public void Start() {
+
+		transform.position = new Vector3(50,1,50);
 
 		toolbar = UIManager.Instance.toolbar;
 		inventoryToolbar = UIManager.Instance.inventoryToolbar;
@@ -73,6 +74,7 @@ public class Player : NetworkBehaviour {
 		GameInput.Instance.OnCloseChest += GameInput_OnCloseChest;
 		GameInput.Instance.OnOpenInventory += GameInput_OnOpenInventory;
 		GameInput.Instance.OnSwitchHotbarSelectedItem += GameInput_OnSwitchHotbarSelectedItem;
+		GameInput.Instance.OnUseItem += GameInput_OnUseItem;
 
 		EventManager.Instance.OnAccessTerminal += EventManager_OnAccessTerminal;
 
@@ -148,9 +150,13 @@ public class Player : NetworkBehaviour {
 			if(i == selectedHotbarSlot){
 				hotbarImages[i].transform.localScale = new Vector3(1.05f, 1.05f, 1.05f);
 				if(playerInventoryObjectList[i] != null && heldItem == null){
-					heldItem = Instantiate(playerInventoryObjectList[i].GetInventoryObjectSO().GetItemPrefab(), new Vector3(0,0,0), Quaternion.identity);
+					Quaternion forwardRotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0, -90, 0));
+					heldItem = Instantiate(
+						playerInventoryObjectList[i].GetInventoryObjectSO().GetItemPrefab(), 
+						new Vector3(0,0,0), 
+						forwardRotation);
 					heldItem.transform.SetParent(transform);
-					heldItem.transform.localPosition = playerItemPosition;
+					heldItem.transform.localPosition = playerHoldPosition.transform.localPosition;
 					heldItem.layer = LayerMask.NameToLayer("Default");
 
 				}
@@ -245,6 +251,14 @@ public class Player : NetworkBehaviour {
 		if(selectedObject != null){
 			if(selectedObject.TryGetComponent(out ChestObject chestObject)){
 				chestObject.CloseChest();
+			}
+		}
+	}
+
+	private void GameInput_OnUseItem(object sender, EventArgs e){
+		if(selectedHotbarSlot != -1 && playerInventoryObjectList[selectedHotbarSlot] != null){
+			if(playerInventoryObjectList[selectedHotbarSlot].GetInventoryObjectSO() is GunItem gunItem){
+				gunItem.Shoot(transform, playerHoldPosition.transform.position);
 			}
 		}
 	}
