@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/GameLobby.unity
     guid: 5702c3940a5afa64f8b5570370b2ecf6
   - enabled: 1
+    path: Assets/Scenes/TempGameScene.unity
+    guid: 48440eefbaf99dc459ca4b4dfd0dfd67
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
