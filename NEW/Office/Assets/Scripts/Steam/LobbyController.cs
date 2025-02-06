@@ -22,6 +22,9 @@ public class LobbyController : MonoBehaviour
     private List<PlayerListItem> playerListItems = new List<PlayerListItem>();
     public PlayerObjectController LocalPlayerController;
 
+    public Button StartGameButton;
+    public TMP_Text ReadyButtonText;
+
     private SteamNetworkManager manager;
 
     private SteamNetworkManager Manager{
@@ -35,6 +38,42 @@ public class LobbyController : MonoBehaviour
 
     private void Awake(){
         if(Instance == null) Instance = this;
+    }
+
+    public void ReadyPlayer(){
+        LocalPlayerController.ChangeReady();
+    }
+
+    public void UpdateButton(){
+        if(LocalPlayerController.Ready){
+            ReadyButtonText.text = "Unready";
+        }
+        else {
+            ReadyButtonText.text = "Ready";
+        }
+    }
+
+    public void CheckIfAllReady(){
+        bool AllReady = true;
+
+        foreach(PlayerObjectController player in Manager.connectedPlayers){
+            if(!player.Ready){
+                AllReady = false;
+                break;
+            }
+        }
+
+        if(AllReady){
+            if(LocalPlayerController.PlayerIDNumber == 1){
+                StartGameButton.interactable = true;
+            }
+            else {
+                StartGameButton.interactable = false;
+            }
+        }
+        else{
+            StartGameButton.interactable = false;
+        }
     }
 
     public void UpdateLobbyName(){
@@ -63,6 +102,7 @@ public class LobbyController : MonoBehaviour
             NewPlayerItemScript.PlayerName = player.PlayerName;
             NewPlayerItemScript.ConnectionID = player.ConnectionID;
             NewPlayerItemScript.PlayerSteamID = player.PlayerSteamID;
+            NewPlayerItemScript.Ready = player.Ready;
             NewPlayerItemScript.SetPLayerValues();
 
 
@@ -83,6 +123,7 @@ public class LobbyController : MonoBehaviour
                 NewPlayerItemScript.PlayerName = player.PlayerName;
                 NewPlayerItemScript.ConnectionID = player.ConnectionID;
                 NewPlayerItemScript.PlayerSteamID = player.PlayerSteamID;
+                NewPlayerItemScript.Ready = player.Ready;
                 NewPlayerItemScript.SetPLayerValues();
 
 
@@ -99,10 +140,18 @@ public class LobbyController : MonoBehaviour
             foreach(PlayerListItem playerListItemScript in playerListItems){
                 if(playerListItemScript.ConnectionID == player.ConnectionID){
                     playerListItemScript.PlayerName = player.PlayerName;
+                    playerListItemScript.Ready = player.Ready;
                     playerListItemScript.SetPLayerValues();
+
+                    if(player == LocalPlayerController){
+                        UpdateButton();
+                    }
                 }
             }
         }
+
+        CheckIfAllReady();
+
     }
 
     public void RemovePlayerItem(){
