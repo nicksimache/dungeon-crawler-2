@@ -38,8 +38,18 @@ public class PlayerMovementControllerTemp : NetworkBehaviour
 
     public void Movement()
     {
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
+        float x = 0f;
+        float y = 0f;
+        if(Input.GetKeyDown(KeyCode.W)){
+            x = 1f;
+        } else if(Input.GetKeyDown(KeyCode.A)){
+            y = 1f;
+        } else if(Input.GetKeyDown(KeyCode.S)){
+            x = -1f;
+        } else if(Input.GetKeyDown(KeyCode.D)){
+            y = -1f;
+        }
+        
 
         Vector3 moveDir = new Vector3(x, 0.0f, y);
 
