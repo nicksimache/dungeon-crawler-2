@@ -10,12 +10,15 @@ public class SteamNetworkManager : NetworkManager
     [SerializeField] private PlayerObjectController playerObjectControllerPrefab;
     public List<PlayerObjectController> connectedPlayers = new List<PlayerObjectController>();
 
-    public List<PlayerObjectController> GetConnectedPlayers(){
+    public List<PlayerObjectController> GetConnectedPlayers()
+    {
         return connectedPlayers;
     }
 
-    public override void OnServerAddPlayer(NetworkConnectionToClient conn){
-        if(SceneManager.GetActiveScene().name == "GameLobby"){
+    public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+    {
+        if (SceneManager.GetActiveScene().name == "GameLobby")
+        {
             PlayerObjectController gamePlayerInstance = Instantiate(playerObjectControllerPrefab);
 
             gamePlayerInstance.ConnectionID = conn.connectionId;
@@ -25,5 +28,10 @@ public class SteamNetworkManager : NetworkManager
             NetworkServer.AddPlayerForConnection(conn, gamePlayerInstance.gameObject);
 
         }
+    }
+
+    public void StartGame(string SceneName)
+    {
+        ServerChangeScene(SceneName);
     }
 }
